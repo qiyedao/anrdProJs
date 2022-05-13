@@ -1,6 +1,6 @@
 import { PlusOutlined } from '@ant-design/icons';
 import { Button, message, Input, Drawer } from 'antd';
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useIntl, FormattedMessage } from 'umi';
 import { PageContainer, FooterToolbar } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
@@ -8,6 +8,8 @@ import { ModalForm, ProFormText, ProFormTextArea } from '@ant-design/pro-form';
 import ProDescriptions from '@ant-design/pro-descriptions';
 import UpdateForm from './components/UpdateForm';
 import { rule, addRule, updateRule, removeRule } from '@/services/ant-design-pro/api';
+import { pagination, columnEmptyText } from '@/config/constant';
+import SearchForm from '@/components/form/SearchForm';
 /**
  * @en-US Add node
  * @zh-CN 添加节点
@@ -92,8 +94,32 @@ const TableList = () => {
   const [updateModalVisible, handleUpdateModalVisible] = useState(false);
   const [showDetail, setShowDetail] = useState(false);
   const actionRef = useRef();
+  const formRef = useRef();
+  const searchFormRef = useRef();
   const [currentRow, setCurrentRow] = useState();
   const [selectedRowsState, setSelectedRows] = useState([]);
+
+  const handleRequest = async (params) => {
+    let searchParams = { ...params };
+    try {
+      console.log('handleRequestsearchFormRef', searchFormRef);
+      if (searchFormRef && searchFormRef.current) {
+        let values = await searchFormRef.current.validateFields();
+        console.log(values, 'handleRequestvalues');
+        searchParams = { ...searchParams, ...values };
+      }
+      console.log('handleRequestsearchParams', searchParams);
+      const data = await rule(searchParams);
+      console.log('data', data);
+      return {
+        data: data.data || [],
+        total: data.data && data.data.length ? data.total : 0,
+        success: true,
+      };
+    } catch (error) {
+      return false;
+    }
+  };
   /**
    * @en-US International configuration
    * @zh-CN 国际化配置
@@ -110,7 +136,7 @@ const TableList = () => {
       ),
       dataIndex: 'name',
       align: 'center',
-
+      search: true,
       tip: 'The rule name is the unique key',
       render: (dom, entity) => {
         return (
@@ -130,6 +156,7 @@ const TableList = () => {
       dataIndex: 'desc',
       align: 'center',
       valueType: 'textarea',
+      search: false,
     },
     {
       title: (
@@ -142,6 +169,7 @@ const TableList = () => {
       sorter: true,
       hideInForm: true,
       align: 'center',
+      search: false,
       renderText: (val) =>
         `${val}${intl.formatMessage({
           id: 'pages.searchTable.tenThousand',
@@ -153,6 +181,7 @@ const TableList = () => {
       dataIndex: 'status',
       hideInForm: true,
       align: 'center',
+
       valueEnum: {
         0: {
           text: (
@@ -196,7 +225,7 @@ const TableList = () => {
       sorter: true,
       dataIndex: 'updatedAt',
       valueType: 'dateTime',
-      search: false,
+
       align: 'center',
       renderFormItem: (item, { defaultRender, ...rest }, form) => {
         const status = form.getFieldValue('status');
@@ -244,24 +273,83 @@ const TableList = () => {
       ],
     },
   ];
+  const searchColumns = [
+    {
+      name: 'name',
+      labelName: '规则名称',
+      type: 'input',
+    },
+    {
+      name: 'number',
+      labelName: '次数',
+      type: 'number',
+    },
+    {
+      name: 'status',
+      labelName: '状态',
+      type: 'select',
+
+      fieldProps: {
+        width: '200px',
+        options: [
+          { label: '1111', value: 1111 },
+          { label: '000', value: '000' },
+        ],
+      },
+    },
+    {
+      name: 'time',
+      labelName: '上次调度时间',
+      type: 'DatePicker',
+    },
+    {
+      name: 'RangePicker',
+      labelName: '上次调度时间22',
+      type: 'RangePicker',
+    },
+  ];
   return (
     <div>
+      <SearchForm
+        searchFormRef={searchFormRef}
+        searchColumns={searchColumns}
+        span={3}
+        toolBarRender={[
+          <Button style={{ marginRight: 16 }} htmlType="reset" key="reset">
+            重置
+          </Button>,
+          <Button
+            onClick={() => {
+              console.log('formRef', formRef);
+              formRef?.current.submit();
+            }}
+            key="search"
+            type="primary"
+          >
+            查询
+          </Button>,
+        ]}
+        labelStyle={{
+          width: 100,
+          letterSpacing: 3,
+        }}
+      />
       <ProTable
         actionRef={actionRef}
+        formRef={formRef}
         rowKey="key"
-        search={{
-          labelWidth: 120,
-        }}
+        search={{ optionRender: () => null }}
         toolBarRender={false}
-        request={rule}
+        request={handleRequest}
         columns={columns}
         // rowSelection={{
         //   onChange: (_, selectedRows) => {
         //     setSelectedRows(selectedRows);
         //   },
         // }}
+        columnEmptyText={'--'}
         pagination={{
-          showSizeChanger: false,
+          ...pagination,
         }}
       />
 

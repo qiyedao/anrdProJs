@@ -49,6 +49,7 @@ const Content = ({ children }) => {
       header={{
         title: '',
       }}
+      style={{ minWidth: 800 }}
       breadcrumbRender={breadcrumbRender}
     >
       <ContentLayout>{children}</ContentLayout>

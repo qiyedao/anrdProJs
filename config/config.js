@@ -41,6 +41,10 @@ export default defineConfig({
     // https://ant.design/docs/react/customize-theme-variable-cn
     'primary-color': '#3362FA',
     'text-color': '#0E2949',
+    'pagination-item-bg': 'rgba(246, 247, 251, 1)',
+    'pagination-item-bg-active': 'rgba(51, 98, 250, 1)',
+    'pagination-item-link-bg': 'rgba(246, 247, 251, 1)',
+    'border-radius-base': '4px',
   },
   // esbuild is father build tools
   // https://umijs.org/plugins/plugin-esbuild

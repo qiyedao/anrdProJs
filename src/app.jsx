@@ -6,6 +6,7 @@ import Footer from '@/components/Footer';
 import Content from './components/Content';
 import { currentUser as queryCurrentUser } from './services/ant-design-pro/api';
 import { BookOutlined, LinkOutlined } from '@ant-design/icons';
+import { notification } from 'antd';
 import defaultSettings from '../config/defaultSettings';
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
@@ -22,6 +23,7 @@ export async function getInitialState() {
   const fetchUserInfo = async () => {
     try {
       const msg = await queryCurrentUser();
+      console.log('queryCurrentUser', msg);
       return msg.data;
     } catch (error) {
       history.push(loginPath);
@@ -32,6 +34,7 @@ export async function getInitialState() {
 
   if (history.location.pathname !== loginPath) {
     const currentUser = await fetchUserInfo();
+    console.log('queryCurrentUser', currentUser);
     return {
       fetchUserInfo,
       currentUser,
