@@ -45,6 +45,9 @@ export default defineConfig({
     'pagination-item-bg-active': 'rgba(51, 98, 250, 1)',
     'pagination-item-link-bg': 'rgba(246, 247, 251, 1)',
     'border-radius-base': '4px',
+    'table-header-cell-split-color': 'transparent',
+    'table-header-bg': 'rgba(237, 239, 242, 1)',
+    'table-border-radius-base': '0px',
   },
   // esbuild is father build tools
   // https://umijs.org/plugins/plugin-esbuild
@@ -59,14 +62,14 @@ export default defineConfig({
   fastRefresh: {},
   openAPI: [
     {
-      requestLibPath: "import { request } from 'umi'",
+      requestLibPath: "import request from '@/utils/request'",
       // 或者使用在线的版本
       // schemaPath: "https://gw.alipayobjects.com/os/antfincdn/M%24jrzTTYJN/oneapi.json"
       schemaPath: join(__dirname, 'oneapi.json'),
       mock: false,
     },
     {
-      requestLibPath: "import { request } from 'umi'",
+      requestLibPath: "import request from '@/utils/request'",
       schemaPath: 'https://gw.alipayobjects.com/os/antfincdn/CA1dOm%2631B/openapi.json',
       projectName: 'swagger',
     },

@@ -2,7 +2,6 @@ import React from 'react';
 import './index.less';
 
 const Content = ({ children }) => {
-  console.log('location', location);
   let noPaddingPath = ['/welcome'];
   const isNO = noPaddingPath.includes(location.pathname);
   return (

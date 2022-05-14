@@ -64,12 +64,14 @@ const Login = () => {
       console.log(msg); // 如果失败去设置用户错误信息
 
       setUserLoginState(msg);
-    } catch (error) {
       const defaultLoginFailureMessage = intl.formatMessage({
         id: 'pages.login.failure',
-        defaultMessage: '登录失败，请重试！',
+        defaultMessage: 'mock error',
       });
-      message.error(defaultLoginFailureMessage);
+      throw new Error(defaultLoginFailureMessage);
+    } catch (error) {
+      console.log('error', error);
+      message.error(error.message);
     }
   };
 

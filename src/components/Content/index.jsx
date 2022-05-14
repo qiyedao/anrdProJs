@@ -5,7 +5,6 @@ import RightContent from '@/components/RightContent';
 import ContentLayout from './Layout/layout';
 const Content = ({ children }) => {
   const breadcrumbRender = ({ currentMenu, breadcrumb }) => {
-    console.log('currentMenu', currentMenu);
     let breadcrumbList = [];
     if (currentMenu.hideInMenu) {
       return (

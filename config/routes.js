@@ -17,14 +17,17 @@ export default [
     path: '/welcome',
     name: 'welcome',
     hideInMenu: true,
-    icon: 'https://www.baidu.com/favicon.ico',
     component: './Welcome',
+    customLevel: 1,
   },
   {
     path: '/admin',
     name: 'admin',
     icon: 'crown',
     access: 'canAdmin',
+    icon: 'setting',
+    customLevel: 1,
+
     // component: './Admin',
     routes: [
       {
@@ -32,12 +35,14 @@ export default [
         name: 'sub-page',
         icon: 'smile',
         access: 'canAdmin',
+
         // component: './Welcome',
         routes: [
           {
             path: '/admin/sub-page/subsub',
             name: 'sub-page',
             icon: 'smile',
+
             access: 'canAdmin',
             component: './TableList',
           },
@@ -69,6 +74,7 @@ export default [
     icon: 'table',
     path: '/list',
     component: './TableList',
+    customLevel: 1,
   },
   {
     path: '/',

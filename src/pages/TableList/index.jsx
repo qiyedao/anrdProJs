@@ -7,13 +7,14 @@ import ProTable from '@ant-design/pro-table';
 import { ModalForm, ProFormText, ProFormTextArea } from '@ant-design/pro-form';
 import ProDescriptions from '@ant-design/pro-descriptions';
 import UpdateForm from './components/UpdateForm';
-import { rule, addRule, updateRule, removeRule } from '@/services/ant-design-pro/api';
+import { list, add, update, remove } from '@/services/ant-design-pro/api';
 import { pagination, columnEmptyText } from '@/config/constant';
 import SearchForm from '@/components/Form/SearchForm';
 import EditBtn from '@/components/Form/components/Button/EditBtn';
 import DeleteBtn from '@/components/Form/components/Button/DeleteBtn';
 import DeleteModal from '@/components/Form/components/Modal/DeleteModal';
 import UpdateModal from '@/components/Form/components/Modal/UpdateModal';
+import ShowOrEditUpload from '@/components/showOrEditUpload';
 /**
  * @en-US Add node
  * @zh-CN 添加节点
@@ -24,7 +25,7 @@ const handleAdd = async (fields) => {
   const hide = message.loading('正在添加');
 
   try {
-    await addRule({ ...fields });
+    await add({ ...fields });
     hide();
     message.success('Added successfully');
     return true;
@@ -45,7 +46,7 @@ const handleUpdate = async (fields) => {
   const hide = message.loading('Configuring');
 
   try {
-    await updateRule({
+    await update({
       name: fields.name,
       desc: fields.desc,
       key: fields.key,
@@ -71,7 +72,7 @@ const handleRemove = async (selectedRows) => {
   if (!selectedRows) return true;
 
   try {
-    await removeRule({
+    await remove({
       key: selectedRows.map((row) => row.key),
     });
     hide();
@@ -128,14 +129,13 @@ const TableList = () => {
   const handleRequest = async (params) => {
     let searchParams = { ...params };
     try {
-      console.log('handleRequestsearchFormRef', searchFormRef);
       if (searchFormRef && searchFormRef.current) {
         let values = await searchFormRef.current.validateFields();
-        console.log(values, 'handleRequestvalues');
+
         searchParams = { ...searchParams, ...values };
       }
       console.log('handleRequestsearchParams', searchParams);
-      const data = await rule(searchParams);
+      const data = await list(searchParams);
       console.log('data', data);
       return {
         data: data.data || [],
@@ -345,7 +345,6 @@ const TableList = () => {
           </Button>,
           <Button
             onClick={() => {
-              console.log('formRef', formRef);
               formRef?.current.submit();
             }}
             key="search"
@@ -366,6 +365,7 @@ const TableList = () => {
         search={{ optionRender: () => null }}
         toolBarRender={false}
         request={handleRequest}
+        // bordered
         columns={columns}
         // rowSelection={{
         //   onChange: (_, selectedRows) => {
@@ -397,6 +397,10 @@ const TableList = () => {
           handleDeleteModalVisible(false);
         }}
         visible={deleteModalVisible}
+      />
+      <ShowOrEditUpload
+        // url={'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'}
+        isButton={true}
       />
 
       {/* <ModalForm

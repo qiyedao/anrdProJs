@@ -4,5 +4,6 @@ export const pagination = {
   position: ['bottomCenter'],
   showSizeChanger: false,
   pageSize: 5,
+  showTotal: () => '',
 };
 export const columnEmptyText = '--';

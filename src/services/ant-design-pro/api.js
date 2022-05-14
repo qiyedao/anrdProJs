@@ -40,7 +40,7 @@ export async function getNotices(options) {
 }
 /** 获取规则列表 GET /api/rule */
 
-export async function rule(params, options) {
+export async function list(params, options) {
   return request('/api/rule', {
     method: 'GET',
     params: { ...params },
@@ -49,7 +49,7 @@ export async function rule(params, options) {
 }
 /** 新建规则 PUT /api/rule */
 
-export async function updateRule(options) {
+export async function update(options) {
   return request('/api/rule', {
     method: 'PUT',
     ...(options || {}),
@@ -57,7 +57,7 @@ export async function updateRule(options) {
 }
 /** 新建规则 POST /api/rule */
 
-export async function addRule(options) {
+export async function add(options) {
   return request('/api/rule', {
     method: 'POST',
     ...(options || {}),
@@ -65,7 +65,7 @@ export async function addRule(options) {
 }
 /** 删除规则 DELETE /api/rule */
 
-export async function removeRule(options) {
+export async function remove(options) {
   return request('/api/rule', {
     method: 'DELETE',
     ...(options || {}),

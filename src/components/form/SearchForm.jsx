@@ -6,8 +6,6 @@ import WrappedFormItem from './components/WrappedFormItem';
 import { renderFormComponent } from '@/components/Form/common/index';
 import { formArr } from '@/components/Form/common/index';
 const Demo = ({ labelStyle = {}, span, searchColumns, searchFormRef, toolBarRender }) => {
-  console.log('searchColumns', searchColumns);
-
   const onFinish = (values) => {
     console.log('Received values from form: ', values);
   };
