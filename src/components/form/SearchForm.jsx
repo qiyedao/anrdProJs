@@ -2,98 +2,8 @@ import React, { useState } from 'react';
 import { Form, Input, Select, Button, DatePicker, Row, Col } from 'antd';
 const { Option } = Select;
 import './index.less';
-import WrappedFormItem from './WrappedFormItem';
-const RangePicker = DatePicker.RangePicker;
-const renderComponent = (item) => {
-  const { type, name, labelName, fieldProps, labelStyle } = item;
-  switch (type) {
-    case 'input':
-      return (
-        <WrappedFormItem
-          name={name}
-          label={
-            <span
-              style={{
-                ...labelStyle,
-              }}
-            >
-              {labelName}
-            </span>
-          }
-        >
-          <Input />
-        </WrappedFormItem>
-      );
-    case 'select':
-      return (
-        <WrappedFormItem
-          name={name}
-          label={
-            <span
-              style={{
-                ...labelStyle,
-              }}
-            >
-              {labelName}
-            </span>
-          }
-        >
-          <Select style={{ width: fieldProps?.width || '100%' }} {...fieldProps} />
-        </WrappedFormItem>
-      );
-    case 'DatePicker':
-      return (
-        <WrappedFormItem
-          name={name}
-          label={
-            <span
-              style={{
-                ...labelStyle,
-              }}
-            >
-              {labelName}
-            </span>
-          }
-        >
-          <DatePicker style={{ width: fieldProps?.width || '100%' }} {...fieldProps} />
-        </WrappedFormItem>
-      );
-    case 'RangePicker':
-      return (
-        <WrappedFormItem
-          name={name}
-          label={
-            <span
-              style={{
-                ...labelStyle,
-              }}
-            >
-              {labelName}
-            </span>
-          }
-        >
-          <RangePicker style={{ width: fieldProps?.width || '100%' }} {...fieldProps} />
-        </WrappedFormItem>
-      );
-    default:
-      return (
-        <WrappedFormItem
-          name={name}
-          label={
-            <span
-              style={{
-                ...labelStyle,
-              }}
-            >
-              {labelName}
-            </span>
-          }
-        >
-          <Input />
-        </WrappedFormItem>
-      );
-  }
-};
+import WrappedFormItem from './components/WrappedFormItem';
+import { renderFormComponent } from '@/components/Form/common/index';
 const Demo = ({ labelStyle = {}, span, searchColumns, searchFormRef, toolBarRender }) => {
   console.log('searchColumns', searchColumns);
 
@@ -141,7 +51,7 @@ const Demo = ({ labelStyle = {}, span, searchColumns, searchFormRef, toolBarRend
                   return (
                     // eslint-disable-next-line react/no-array-index-key
                     <div key={`${index}searchColumns`} className={'custom-col'}>
-                      {renderComponent(item)}
+                      {renderFormComponent(item)}
                     </div>
                   );
                 })}

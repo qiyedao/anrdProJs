@@ -9,7 +9,10 @@ import ProDescriptions from '@ant-design/pro-descriptions';
 import UpdateForm from './components/UpdateForm';
 import { rule, addRule, updateRule, removeRule } from '@/services/ant-design-pro/api';
 import { pagination, columnEmptyText } from '@/config/constant';
-import SearchForm from '@/components/form/SearchForm';
+import SearchForm from '@/components/Form/SearchForm';
+import EditBtn from '@/components/Form/components/Button/EditBtn';
+import DeleteBtn from '@/components/Form/components/Button/DeleteBtn';
+import CustomModal from '@/components/Form/components/CustomModal';
 /**
  * @en-US Add node
  * @zh-CN 添加节点
@@ -255,21 +258,35 @@ const TableList = () => {
       valueType: 'option',
       align: 'center',
       render: (_, record) => [
-        <a
-          key="config"
+        // <a
+        //   key="config"
+        //   onClick={() => {
+        //     handleUpdateModalVisible(true);
+        //     setCurrentRow(record);
+        //   }}
+        // >
+        //   <FormattedMessage id="pages.searchTable.config" defaultMessage="Configuration" />
+        // </a>,
+        // <a key="subscribeAlert" href="https://procomponents.ant.design/">
+        //   <FormattedMessage
+        //     id="pages.searchTable.subscribeAlert"
+        //     defaultMessage="Subscribe to alerts"
+        //   />
+        // </a>,
+        <EditBtn
           onClick={() => {
             handleUpdateModalVisible(true);
             setCurrentRow(record);
           }}
-        >
-          <FormattedMessage id="pages.searchTable.config" defaultMessage="Configuration" />
-        </a>,
-        <a key="subscribeAlert" href="https://procomponents.ant.design/">
-          <FormattedMessage
-            id="pages.searchTable.subscribeAlert"
-            defaultMessage="Subscribe to alerts"
-          />
-        </a>,
+          key={'edit'}
+        />,
+        <DeleteBtn
+          onClick={() => {
+            handleUpdateModalVisible(true);
+            setCurrentRow(record);
+          }}
+          key={'del'}
+        />,
       ],
     },
   ];
@@ -352,8 +369,9 @@ const TableList = () => {
           ...pagination,
         }}
       />
+      <CustomModal title="编辑" visible={updateModalVisible} />
 
-      <ModalForm
+      {/* <ModalForm
         title={intl.formatMessage({
           id: 'pages.searchTable.createForm.newRule',
           defaultMessage: 'New rule',
@@ -389,8 +407,8 @@ const TableList = () => {
           name="name"
         />
         <ProFormTextArea width="md" name="desc" />
-      </ModalForm>
-      <UpdateForm
+      </ModalForm> */}
+      {/* <UpdateForm
         onSubmit={async (value) => {
           const success = await handleUpdate(value);
 
@@ -412,9 +430,9 @@ const TableList = () => {
         }}
         updateModalVisible={updateModalVisible}
         values={currentRow || {}}
-      />
+      /> */}
 
-      <Drawer
+      {/* <Drawer
         width={600}
         visible={showDetail}
         onClose={() => {
@@ -436,7 +454,7 @@ const TableList = () => {
             columns={columns}
           />
         )}
-      </Drawer>
+      </Drawer> */}
     </div>
   );
 };
