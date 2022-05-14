@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'antd';
+import classNames from 'classnames';
 import './index.less';
 export default ({
   children,
@@ -12,12 +13,17 @@ export default ({
   footer,
   visible,
   title,
+  rightTitle,
   closable,
   footerStyle,
   headerStyle,
   contentStyle,
   confirmLoading,
   bodyStyle,
+  headerBorder = false,
+  footerBorder = false,
+  titleStyle,
+  rigitTitleStyle,
 }) => {
   const renderButton = () => {
     if (footer) {
@@ -53,14 +59,28 @@ export default ({
       closable={closable || false}
       closeIcon={<div>hello</div>}
       visible={visible}
-      bodyStyle={bodyStyle || { padding: 16 }}
+      bodyStyle={bodyStyle || {}}
     >
-      <div className="custom-modal-header" style={headerStyle || {}}>
-        <div>{title}</div>
-        <div>hello</div>
+      <div
+        className={classNames(
+          'custom-modal-header',
+          headerBorder ? 'custom-modal-header-border' : '',
+        )}
+        style={headerStyle || {}}
+      >
+        <div style={titleStyle || {}}>{title}</div>
+        <div style={rigitTitleStyle || {}} className={classNames('custom-title-right')}>
+          {rightTitle}
+        </div>
       </div>
       <div style={contentStyle || {}}>{children}</div>
-      <div style={footerStyle || { display: 'flex', justifyContent: 'center' }}>
+      <div
+        className={classNames(
+          'custom-modal-footer',
+          footerBorder ? 'custom-modal-footer-border' : '',
+        )}
+        style={footerStyle || {}}
+      >
         {renderButton()}
       </div>
     </Modal>

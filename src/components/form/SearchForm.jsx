@@ -4,6 +4,7 @@ const { Option } = Select;
 import './index.less';
 import WrappedFormItem from './components/WrappedFormItem';
 import { renderFormComponent } from '@/components/Form/common/index';
+import { formArr } from '@/components/Form/common/index';
 const Demo = ({ labelStyle = {}, span, searchColumns, searchFormRef, toolBarRender }) => {
   console.log('searchColumns', searchColumns);
 
@@ -18,16 +19,7 @@ const Demo = ({ labelStyle = {}, span, searchColumns, searchFormRef, toolBarRend
 
     return Promise.reject(new Error('Price must be greater than zero!'));
   };
-  const formArr = (arr, span) => {
-    let arr2 = [];
-    let tempArr = [];
-    for (let i = 0; i < arr.length / span; i++) {
-      arr2.push(arr.slice(i * span, span * (i + 1)));
-    }
 
-    console.log('arr2', arr2);
-    return arr2;
-  };
   return (
     <Form
       ref={searchFormRef}

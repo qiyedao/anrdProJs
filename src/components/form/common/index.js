@@ -92,3 +92,13 @@ export const renderFormComponent = (item) => {
       );
   }
 };
+
+export const formArr = (arr, span) => {
+  let arr2 = [];
+  let tempArr = [];
+  for (let i = 0; i < arr.length / span; i++) {
+    arr2.push(arr.slice(i * span, span * (i + 1)));
+  }
+
+  return arr2;
+};

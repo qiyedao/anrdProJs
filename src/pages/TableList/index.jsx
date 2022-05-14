@@ -12,7 +12,8 @@ import { pagination, columnEmptyText } from '@/config/constant';
 import SearchForm from '@/components/Form/SearchForm';
 import EditBtn from '@/components/Form/components/Button/EditBtn';
 import DeleteBtn from '@/components/Form/components/Button/DeleteBtn';
-import CustomModal from '@/components/Form/components/CustomModal';
+import DeleteModal from '@/components/Form/components/Modal/DeleteModal';
+import UpdateModal from '@/components/Form/components/Modal/UpdateModal';
 /**
  * @en-US Add node
  * @zh-CN 添加节点
@@ -95,11 +96,33 @@ const TableList = () => {
    * */
 
   const [updateModalVisible, handleUpdateModalVisible] = useState(false);
+  /**
+   * 删除modal
+   */
+  const [deleteModalVisible, handleDeleteModalVisible] = useState(false);
+  /**
+   * 详情Mdoal
+   */
   const [showDetail, setShowDetail] = useState(false);
+  /**
+   * table action
+   */
   const actionRef = useRef();
+  /**
+   * form
+   */
   const formRef = useRef();
+  /**
+   * search form
+   */
   const searchFormRef = useRef();
+  /**
+   * current record
+   */
   const [currentRow, setCurrentRow] = useState();
+  /**
+   * current selectRows
+   */
   const [selectedRowsState, setSelectedRows] = useState([]);
 
   const handleRequest = async (params) => {
@@ -258,21 +281,6 @@ const TableList = () => {
       valueType: 'option',
       align: 'center',
       render: (_, record) => [
-        // <a
-        //   key="config"
-        //   onClick={() => {
-        //     handleUpdateModalVisible(true);
-        //     setCurrentRow(record);
-        //   }}
-        // >
-        //   <FormattedMessage id="pages.searchTable.config" defaultMessage="Configuration" />
-        // </a>,
-        // <a key="subscribeAlert" href="https://procomponents.ant.design/">
-        //   <FormattedMessage
-        //     id="pages.searchTable.subscribeAlert"
-        //     defaultMessage="Subscribe to alerts"
-        //   />
-        // </a>,
         <EditBtn
           onClick={() => {
             handleUpdateModalVisible(true);
@@ -282,7 +290,7 @@ const TableList = () => {
         />,
         <DeleteBtn
           onClick={() => {
-            handleUpdateModalVisible(true);
+            handleDeleteModalVisible(true);
             setCurrentRow(record);
           }}
           key={'del'}
@@ -369,7 +377,27 @@ const TableList = () => {
           ...pagination,
         }}
       />
-      <CustomModal title="编辑" visible={updateModalVisible} />
+      <UpdateModal
+        onSubmit={() => {
+          handleUpdateModalVisible(false);
+        }}
+        onCancel={() => {
+          handleUpdateModalVisible(false);
+        }}
+        footerStyle={{
+          paddingBottom: 20,
+        }}
+        visible={updateModalVisible}
+      />
+      <DeleteModal
+        onSubmit={() => {
+          handleDeleteModalVisible(false);
+        }}
+        onCancel={() => {
+          handleDeleteModalVisible(false);
+        }}
+        visible={deleteModalVisible}
+      />
 
       {/* <ModalForm
         title={intl.formatMessage({
