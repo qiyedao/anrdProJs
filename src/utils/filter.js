@@ -94,6 +94,21 @@ export const FileType = {
   previewDomument: ['doc', 'xls', 'ppt', 'pptx', 'xlsx', 'docx', 'pdf'],
   previewVideo: ['mp4', 'avi', 'mp4?', 'avi?'],
 };
+export const FileApplicationType = {
+  doc: 'application/msword',
+  docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  ppt: 'application/vnd.ms-powerpoint',
+  pptx: 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+  xls: 'application/vnd.ms-excel',
+  xlsx: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  pdf: 'application/pdf',
+  zip: 'application/x-zip-compressed',
+  txt: 'text/plain',
+  png: 'image/png',
+  jpg: 'image/jpeg',
+  rar: '',
+  mp4: 'video/mp4',
+};
 
 export const formatTime = (duration) => {
   //scrstr 源字符串 armstr 特殊字符
