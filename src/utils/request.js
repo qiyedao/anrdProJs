@@ -23,23 +23,7 @@ const codeMessage = {
 /** 异常处理程序 */
 
 const errorHandler = (error) => {
-  const { response } = error;
-
-  if (response && response.status) {
-    const errorText = codeMessage[response.status] || response.statusText;
-    const { status, url } = response;
-    notification.error({
-      message: `请求错误 ${status}: ${url}`,
-      description: errorText,
-    });
-  } else if (!response) {
-    notification.error({
-      description: '您的网络发生异常，无法连接服务器',
-      message: '网络异常',
-    });
-  }
-
-  return response;
+  return Promise.reject(error);
 };
 /** 配置request请求时的默认参数 */
 const request = extend({
@@ -65,41 +49,41 @@ request.interceptors.request.use((url, options) => {
 });
 
 request.interceptors.response.use(async (response) => {
-  try {
-    console.log('interceptors response', response, window.location.pathname);
-    let umiData = '';
-    if (
-      response.url.indexOf('excel/export') == -1 &&
-      response.url.indexOf('api/file/video') == -1
-    ) {
-      umiData = await response.clone().json();
-    }
-    if (
-      umiData &&
-      umiData.status &&
-      umiData.status.code == -2 &&
-      window.location.pathname.indexOf('admin') >= 0
-    ) {
-      console.log('umi 拦截 未登录', response.url);
-      try {
-        if (localStorage.noLoginCount != 1) {
-          localStorage.noLoginCount = 1;
+  const { url } = response;
+  console.log('interceptors response===>', 'response', response);
 
-          // localStorage.removeItem('token');
-          let { redirect } = params;
-          if (window.location.pathname !== '/admin/login' && !redirect) {
-            let url = '/admin/login';
-            // window.location.href = url;
-          }
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    return response;
-  } catch (error) {
-    console.log(error);
+  let data = '';
+  if (response.url.indexOf('excel/export') == -1 && response.url.indexOf('api/file/video') == -1) {
+    data = await response.clone().json();
+    console.log('response', data);
   }
-}, errorHandler);
+  if (data && data.status && data.status.code !== undefined) {
+    //return manual status;
+    const errorText = codeMessage[data.status.code] || '';
+    const errorCode = data.status.code;
+    notification.error({
+      message: `请求错误：${url}`,
+      description: `错误码：${errorCode || ''}`,
+      key: 'errorCode',
+    });
+    throw new Error(data.status.message || errorText || 'Error');
+  }
+  if (data && data.error) {
+    //return system status;
+    console.log('systemresponse,', data);
+    const { url } = response;
+    const errorText = codeMessage[data.status] || '';
+
+    const errorCode = data.status;
+
+    notification.error({
+      message: `请求错误：${url}`,
+      description: `错误码：${errorCode || ''}`,
+      key: 'errorCode',
+    });
+    throw new Error(data.error || errorText || 'Error');
+  }
+  return response;
+});
 
 export default request;

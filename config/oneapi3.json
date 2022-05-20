@@ -1,0 +1,1531 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "更多请咨询服务开发者",
+    "version": "1.0  响应状态码:\nCode        说明\n1        操作成功\n-1        操作失败\n1002        服务繁忙\n-2        用户未登录\n1001        参数错误\n",
+    "title": "材料管理系统接口文档",
+    "contact": { "name": "李文乔", "email": "528426487@qq.com" }
+  },
+  "host": "106.15.206.62:8097",
+  "basePath": "/",
+  "tags": [
+    { "name": "品牌信息管理", "description": "Company Ctrl" },
+    { "name": "文件操作", "description": "File Ctrl" },
+    { "name": "材料信息管理", "description": "Material Ctrl" },
+    { "name": "系统配置管理", "description": "Sys Config Ctrl" }
+  ],
+  "paths": {
+    "/api/company": {
+      "get": {
+        "tags": ["品牌信息管理"],
+        "summary": "查询品牌信息列表",
+        "operationId": "selectCompanyListUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "companyLevelId",
+            "in": "query",
+            "description": "评级id",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "companyType",
+            "in": "query",
+            "description": "品牌类型: [firm:厂商, supplier:供应商]",
+            "required": false,
+            "type": "string",
+            "enum": ["firm", "supplier"]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Result«List«Company»»",
+              "originalRef": "Result«List«Company»»"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "post": {
+        "tags": ["品牌信息管理"],
+        "summary": "新增品牌信息",
+        "operationId": "insertCompanyDtoUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "companyDto",
+            "description": "companyDto",
+            "required": true,
+            "schema": { "$ref": "#/definitions/CompanyDto", "originalRef": "CompanyDto" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/Result", "originalRef": "Result" }
+          }
+        },
+        "deprecated": false
+      },
+      "put": {
+        "tags": ["品牌信息管理"],
+        "summary": "编辑品牌信息",
+        "operationId": "updateCompanyDtoUsingPUT",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "companyDto",
+            "description": "companyDto",
+            "required": true,
+            "schema": { "$ref": "#/definitions/CompanyDto", "originalRef": "CompanyDto" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/Result", "originalRef": "Result" }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/company/detail/{id}": {
+      "get": {
+        "tags": ["品牌信息管理"],
+        "summary": "查询品牌信息详情",
+        "operationId": "selectCompanyDtoUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "品牌 ID",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Result«CompanyDto»",
+              "originalRef": "Result«CompanyDto»"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/company/page": {
+      "get": {
+        "tags": ["品牌信息管理"],
+        "summary": "分页查询品牌信息",
+        "operationId": "selectCompanyDtoListBackStageUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "companyAbb",
+            "in": "query",
+            "description": "品牌名称",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "companyLevelId",
+            "in": "query",
+            "description": "评级id",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "companyType",
+            "in": "query",
+            "description": "品牌类型: [firm:厂商, supplier:供应商]",
+            "required": false,
+            "type": "string",
+            "enum": ["firm", "supplier"]
+          },
+          {
+            "name": "fieldId",
+            "in": "query",
+            "description": "领域id",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "materialId",
+            "in": "query",
+            "description": "材料id",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "description": "当前页码，从 1 开始",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 1
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "每页条数，最大值为 100",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 10
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Result«PageResult«CompanyDto»»",
+              "originalRef": "Result«PageResult«CompanyDto»»"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/company/{id}": {
+      "delete": {
+        "tags": ["品牌信息管理"],
+        "summary": "删除品牌信息",
+        "operationId": "deleteCompanyDtoUsingDELETE",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "品牌 ID",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/Result", "originalRef": "Result" }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/file/delete": {
+      "delete": {
+        "tags": ["文件操作"],
+        "summary": "删除文件",
+        "operationId": "deleteFileUsingDELETE",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "fileName",
+            "in": "query",
+            "description": "文件路径",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/Result", "originalRef": "Result" }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/file/delete/list": {
+      "delete": {
+        "tags": ["文件操作"],
+        "summary": "批量删除文件",
+        "operationId": "deleteFileListUsingDELETE",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "fileNameList",
+            "description": "fileNameList",
+            "required": true,
+            "schema": { "type": "array", "items": { "type": "string" } }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/Result", "originalRef": "Result" }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/file/upload": {
+      "post": {
+        "tags": ["文件操作"],
+        "summary": "上传文件",
+        "operationId": "uploadUsingPOST",
+        "consumes": ["multipart/form-data"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "file",
+            "in": "formData",
+            "description": "文件",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "description": "文件类型",
+            "required": false,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/Result", "originalRef": "Result" }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/file/view": {
+      "get": {
+        "tags": ["文件操作"],
+        "summary": "文件预览",
+        "operationId": "downLoadUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "filePath",
+            "in": "query",
+            "description": "文件路径",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "isOnLine",
+            "in": "query",
+            "description": "查看方式:[1:预览,0:下载]",
+            "required": false,
+            "type": "string",
+            "default": "1",
+            "enum": ["0", "1"]
+          }
+        ],
+        "responses": { "200": { "description": "OK" } },
+        "deprecated": false
+      }
+    },
+    "/api/material": {
+      "get": {
+        "tags": ["材料信息管理"],
+        "summary": "查询材料信息列表",
+        "operationId": "selectMaterialListUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "orderParam",
+            "in": "query",
+            "description": "排序参数: [createTime:创建时间, orderIndex:排序权重]",
+            "required": false,
+            "type": "string",
+            "default": "createTime",
+            "enum": ["createTime", "orderIndex"]
+          },
+          {
+            "name": "projectType",
+            "in": "query",
+            "description": "所属工程: [civil:土建工程, install:安装工程, other:其他工程]",
+            "required": false,
+            "type": "string",
+            "enum": ["civil", "install", "other"]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Result«List«Material»»",
+              "originalRef": "Result«List«Material»»"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "post": {
+        "tags": ["材料信息管理"],
+        "summary": "新增材料信息",
+        "operationId": "insertMaterialDtoUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "materialDto",
+            "description": "materialDto",
+            "required": true,
+            "schema": { "$ref": "#/definitions/MaterialDto", "originalRef": "MaterialDto" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/Result", "originalRef": "Result" }
+          }
+        },
+        "deprecated": false
+      },
+      "put": {
+        "tags": ["材料信息管理"],
+        "summary": "编辑材料信息",
+        "operationId": "updateMaterialDtoUsingPUT",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "materialDto",
+            "description": "materialDto",
+            "required": true,
+            "schema": { "$ref": "#/definitions/MaterialDto", "originalRef": "MaterialDto" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/Result", "originalRef": "Result" }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/material/detail/{id}": {
+      "get": {
+        "tags": ["材料信息管理"],
+        "summary": "查询材料信息详情",
+        "operationId": "selectMaterialDtoUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "材料 ID",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Result«MaterialDto»",
+              "originalRef": "Result«MaterialDto»"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/material/page": {
+      "get": {
+        "tags": ["材料信息管理"],
+        "summary": "分页查询材料信息",
+        "operationId": "selectMaterialDtoListBackStageUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "companyId",
+            "in": "query",
+            "description": "品牌id",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "materialName",
+            "in": "query",
+            "description": "材料名称",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "orderParam",
+            "in": "query",
+            "description": "排序参数: [createTime:创建时间, orderIndex:排序权重]",
+            "required": false,
+            "type": "string",
+            "default": "createTime",
+            "enum": ["createTime", "orderIndex"]
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "description": "当前页码，从 1 开始",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 1
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "每页条数，最大值为 100",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 10
+          },
+          {
+            "name": "projectType",
+            "in": "query",
+            "description": "所属工程: [civil:土建工程, install:安装工程, other:其他工程]",
+            "required": false,
+            "type": "string",
+            "enum": ["civil", "install", "other"]
+          },
+          {
+            "name": "typeId",
+            "in": "query",
+            "description": "类型id",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Result«PageResult«MaterialDto»»",
+              "originalRef": "Result«PageResult«MaterialDto»»"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/material/{id}": {
+      "delete": {
+        "tags": ["材料信息管理"],
+        "summary": "删除材料信息",
+        "operationId": "deleteMaterialDtoUsingDELETE",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "材料 ID",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/Result", "originalRef": "Result" }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/sysConfig": {
+      "get": {
+        "tags": ["系统配置管理"],
+        "summary": "查询系统配置列表",
+        "operationId": "selectSysConfigListUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "confCode",
+            "in": "query",
+            "description": "配置编码 ",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "confType",
+            "in": "query",
+            "description": "配置类型:[companyLevel:品牌评级, materialType:材料类型, companyField:品牌领域]",
+            "required": false,
+            "type": "string",
+            "enum": ["materialType", "companyField", "companyLevel"]
+          },
+          {
+            "name": "orderParam",
+            "in": "query",
+            "description": "排序参数: [createTime:创建时间, orderIndex:排序权重]",
+            "required": false,
+            "type": "string",
+            "default": "createTime",
+            "enum": ["createTime", "orderIndex"]
+          },
+          {
+            "name": "orderType",
+            "in": "query",
+            "description": "排序类型: [0:正序, 1:倒序]",
+            "required": false,
+            "type": "string",
+            "default": "1",
+            "enum": ["0", "1"]
+          },
+          {
+            "name": "parentId",
+            "in": "query",
+            "description": "系统配置 父级id",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Result«List«SysConfig»»",
+              "originalRef": "Result«List«SysConfig»»"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "post": {
+        "tags": ["系统配置管理"],
+        "summary": "新增系统配置项",
+        "operationId": "insertSysConfigUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "confCode",
+            "in": "query",
+            "description": "配置项编码",
+            "required": false,
+            "type": "string",
+            "maxLength": 32,
+            "minLength": 1
+          },
+          {
+            "name": "confIcon",
+            "in": "query",
+            "description": "图标",
+            "required": false,
+            "type": "string",
+            "maxLength": 128,
+            "minLength": 1
+          },
+          {
+            "name": "confName",
+            "in": "query",
+            "description": "配置项名称",
+            "required": true,
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 1
+          },
+          {
+            "name": "confRemark",
+            "in": "query",
+            "description": "备注说明",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "confType",
+            "in": "query",
+            "description": "模块类型: [companyLevel:品牌评级, materialType:材料类型, companyField:品牌领域]",
+            "required": true,
+            "type": "string",
+            "enum": ["companyLevel", "materialType", "companyField"]
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "ID主键，一般新增不传，编辑必传",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "operId",
+            "in": "query",
+            "description": "创建人id",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "operName",
+            "in": "query",
+            "description": "创建人名称",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "orderIndex",
+            "in": "query",
+            "description": "排序权重",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 1
+          },
+          {
+            "name": "parentId",
+            "in": "query",
+            "description": "父级id",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/Result", "originalRef": "Result" }
+          }
+        },
+        "deprecated": false
+      },
+      "put": {
+        "tags": ["系统配置管理"],
+        "summary": "编辑系统配置项",
+        "operationId": "updateSysConfigUsingPUT",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "confCode",
+            "in": "query",
+            "description": "配置项编码",
+            "required": false,
+            "type": "string",
+            "maxLength": 32,
+            "minLength": 1
+          },
+          {
+            "name": "confIcon",
+            "in": "query",
+            "description": "图标",
+            "required": false,
+            "type": "string",
+            "maxLength": 128,
+            "minLength": 1
+          },
+          {
+            "name": "confName",
+            "in": "query",
+            "description": "配置项名称",
+            "required": true,
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 1
+          },
+          {
+            "name": "confRemark",
+            "in": "query",
+            "description": "备注说明",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "confType",
+            "in": "query",
+            "description": "模块类型: [companyLevel:品牌评级, materialType:材料类型, companyField:品牌领域]",
+            "required": true,
+            "type": "string",
+            "enum": ["companyLevel", "materialType", "companyField"]
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "ID主键，一般新增不传，编辑必传",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "operId",
+            "in": "query",
+            "description": "创建人id",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "operName",
+            "in": "query",
+            "description": "创建人名称",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "orderIndex",
+            "in": "query",
+            "description": "排序权重",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 1
+          },
+          {
+            "name": "parentId",
+            "in": "query",
+            "description": "父级id",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/Result", "originalRef": "Result" }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/sysConfig/detail": {
+      "get": {
+        "tags": ["系统配置管理"],
+        "summary": "查询系统配置详情",
+        "operationId": "selectSysConfigUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "confType",
+            "in": "query",
+            "description": "配置类型:[companyLevel:品牌评级, materialType:材料类型, companyField:品牌领域]",
+            "required": false,
+            "type": "string",
+            "enum": ["materialType", "companyField", "companyLevel"]
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "系统配置 ID",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Result«SysConfig»",
+              "originalRef": "Result«SysConfig»"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/sysConfig/page": {
+      "get": {
+        "tags": ["系统配置管理"],
+        "summary": "分页查询系统配置列表",
+        "operationId": "selectSysConfigListBackStageUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "confCode",
+            "in": "query",
+            "description": "配置编码",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "confName",
+            "in": "query",
+            "description": "配置名称",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "confType",
+            "in": "query",
+            "description": "配置类型:[companyLevel:品牌评级, materialType:材料类型, companyField:品牌领域]",
+            "required": false,
+            "type": "string",
+            "enum": ["materialType", "companyField", "companyLevel"]
+          },
+          {
+            "name": "orderParam",
+            "in": "query",
+            "description": "排序参数: [createTime:创建时间, orderIndex:排序权重]",
+            "required": false,
+            "type": "string",
+            "default": "createTime",
+            "enum": ["createTime", "orderIndex"]
+          },
+          {
+            "name": "orderType",
+            "in": "query",
+            "description": "排序类型: [0:正序, 1:倒序]",
+            "required": false,
+            "type": "string",
+            "default": "1",
+            "enum": ["0", "1"]
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "description": "当前页数",
+            "required": false,
+            "type": "string",
+            "default": "1"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "显示条数",
+            "required": false,
+            "type": "string",
+            "default": "10"
+          },
+          {
+            "name": "parentId",
+            "in": "query",
+            "description": "系统配置 父级id",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Result«PageResult«SysConfig»»",
+              "originalRef": "Result«PageResult«SysConfig»»"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/sysConfig/{id}": {
+      "delete": {
+        "tags": ["系统配置管理"],
+        "summary": "删除系统配置项",
+        "operationId": "deleteSysConfigUsingDELETE",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "系统配置 ID",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/Result", "originalRef": "Result" }
+          }
+        },
+        "deprecated": false
+      }
+    }
+  },
+  "definitions": {
+    "Company": {
+      "type": "object",
+      "required": ["companyType", "contactPhone", "fundUnit", "registerFund"],
+      "properties": {
+        "address": { "type": "string", "description": "区域地址" },
+        "areaCode": { "type": "string", "description": "县区编码" },
+        "businessLicense": { "type": "string", "description": "营业执照" },
+        "cityCode": { "type": "string", "description": "城市编码" },
+        "companyAbb": {
+          "type": "string",
+          "description": "品牌名称",
+          "minLength": 1,
+          "maxLength": 32
+        },
+        "companyIntroduce": { "type": "string", "description": "公司介绍" },
+        "companyLevelId": { "type": "integer", "format": "int32", "description": "评级" },
+        "companyLogo": { "type": "string", "description": "品牌logo" },
+        "companyName": {
+          "type": "string",
+          "description": "公司全称",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "companyRemark": { "type": "string", "description": "备注" },
+        "companyType": {
+          "type": "string",
+          "description": "品牌类型: [firm:厂商, supplier:供应商]",
+          "enum": ["firm", "supplier"]
+        },
+        "contactName": {
+          "type": "string",
+          "description": "联系人姓名",
+          "minLength": 1,
+          "maxLength": 32
+        },
+        "contactPhone": {
+          "type": "string",
+          "description": "联系人手机号",
+          "minLength": 11,
+          "maxLength": 11
+        },
+        "detailAddress": { "type": "string", "description": "详细地址" },
+        "email": { "type": "string", "description": "邮箱", "minLength": 1, "maxLength": 32 },
+        "fax": { "type": "string", "description": "传真", "minLength": 1, "maxLength": 32 },
+        "fundUnit": {
+          "type": "string",
+          "description": "资金单位: [RMB:万元人民币, USD:万美元]",
+          "enum": ["RMB", "USD"]
+        },
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "description": "ID主键，一般新增不传，编辑必传"
+        },
+        "operId": { "type": "integer", "format": "int32", "description": "操作人id" },
+        "position": { "type": "string", "description": "职位", "minLength": 1, "maxLength": 32 },
+        "provinceCode": { "type": "string", "description": "省份编码" },
+        "registerFund": {
+          "type": "integer",
+          "format": "int32",
+          "example": 100,
+          "description": "注册资金"
+        },
+        "telephone": {
+          "type": "string",
+          "description": "固定电话",
+          "minLength": 1,
+          "maxLength": 32
+        }
+      },
+      "title": "Company"
+    },
+    "CompanyDto": {
+      "type": "object",
+      "required": ["companyType", "contactPhone", "fundUnit", "registerFund"],
+      "properties": {
+        "address": { "type": "string", "description": "区域地址" },
+        "areaCode": { "type": "string", "description": "县区编码" },
+        "businessLicense": { "type": "string", "description": "营业执照" },
+        "cityCode": { "type": "string", "description": "城市编码" },
+        "companyAbb": {
+          "type": "string",
+          "description": "品牌名称",
+          "minLength": 1,
+          "maxLength": 32
+        },
+        "companyFields": {
+          "type": "array",
+          "description": "品牌关联领域",
+          "items": { "$ref": "#/definitions/CompanyField", "originalRef": "CompanyField" }
+        },
+        "companyIntroduce": { "type": "string", "description": "公司介绍" },
+        "companyLevelId": { "type": "integer", "format": "int32", "description": "评级" },
+        "companyLevelName": { "type": "string", "description": "评级名称" },
+        "companyLogo": { "type": "string", "description": "品牌logo" },
+        "companyMaterials": {
+          "type": "array",
+          "description": "品牌关联材料",
+          "items": { "$ref": "#/definitions/CompanyMaterial", "originalRef": "CompanyMaterial" }
+        },
+        "companyName": {
+          "type": "string",
+          "description": "公司全称",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "companyRemark": { "type": "string", "description": "备注" },
+        "companyType": {
+          "type": "string",
+          "description": "品牌类型: [firm:厂商, supplier:供应商]",
+          "enum": ["firm", "supplier"]
+        },
+        "contactName": {
+          "type": "string",
+          "description": "联系人姓名",
+          "minLength": 1,
+          "maxLength": 32
+        },
+        "contactPhone": {
+          "type": "string",
+          "description": "联系人手机号",
+          "minLength": 11,
+          "maxLength": 11
+        },
+        "detailAddress": { "type": "string", "description": "详细地址" },
+        "email": { "type": "string", "description": "邮箱", "minLength": 1, "maxLength": 32 },
+        "fax": { "type": "string", "description": "传真", "minLength": 1, "maxLength": 32 },
+        "fundUnit": {
+          "type": "string",
+          "description": "资金单位: [RMB:万元人民币, USD:万美元]",
+          "enum": ["RMB", "USD"]
+        },
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "description": "ID主键，一般新增不传，编辑必传"
+        },
+        "operId": { "type": "integer", "format": "int32", "description": "操作人id" },
+        "operName": { "type": "string", "description": "创建人名称" },
+        "position": { "type": "string", "description": "职位", "minLength": 1, "maxLength": 32 },
+        "provinceCode": { "type": "string", "description": "省份编码" },
+        "registerFund": {
+          "type": "integer",
+          "format": "int32",
+          "example": 100,
+          "description": "注册资金"
+        },
+        "telephone": {
+          "type": "string",
+          "description": "固定电话",
+          "minLength": 1,
+          "maxLength": 32
+        }
+      },
+      "title": "CompanyDto",
+      "description": "品牌业务"
+    },
+    "CompanyField": {
+      "type": "object",
+      "properties": {
+        "companyAbb": {
+          "type": "string",
+          "description": "品牌名称",
+          "minLength": 1,
+          "maxLength": 32
+        },
+        "companyId": { "type": "integer", "format": "int32", "description": "品牌id" },
+        "fieldId": { "type": "integer", "format": "int32", "description": "领域id" },
+        "fieldName": {
+          "type": "string",
+          "description": "领域名称",
+          "minLength": 1,
+          "maxLength": 32
+        },
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "description": "ID主键，一般新增不传，编辑必传"
+        }
+      },
+      "title": "CompanyField"
+    },
+    "CompanyMaterial": {
+      "type": "object",
+      "properties": {
+        "companyAbb": {
+          "type": "string",
+          "description": "品牌名称",
+          "minLength": 1,
+          "maxLength": 32
+        },
+        "companyId": { "type": "integer", "format": "int32", "description": "品牌id" },
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "description": "ID主键，一般新增不传，编辑必传"
+        },
+        "materialId": { "type": "integer", "format": "int32", "description": "材料id" },
+        "materialName": {
+          "type": "string",
+          "description": "材料名称",
+          "minLength": 1,
+          "maxLength": 32
+        },
+        "measureUnit": {
+          "type": "string",
+          "description": "计量单位",
+          "minLength": 1,
+          "maxLength": 32
+        },
+        "specification": {
+          "type": "string",
+          "description": "规格型号",
+          "minLength": 1,
+          "maxLength": 32
+        },
+        "unitPrice": { "type": "number", "example": 999.99, "description": "单价" }
+      },
+      "title": "CompanyMaterial"
+    },
+    "Material": {
+      "type": "object",
+      "required": ["guidePrice", "projectType"],
+      "properties": {
+        "guidePrice": { "type": "number", "example": 999.99, "description": "指导价格" },
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "description": "ID主键，一般新增不传，编辑必传"
+        },
+        "materialImg": { "type": "string", "description": "材料图片" },
+        "materialName": {
+          "type": "string",
+          "description": "材料名称",
+          "minLength": 1,
+          "maxLength": 32
+        },
+        "materialRemark": { "type": "string", "description": "材料介绍" },
+        "measureUnit": {
+          "type": "string",
+          "description": "计量单位",
+          "minLength": 1,
+          "maxLength": 32
+        },
+        "operId": { "type": "integer", "format": "int32", "description": "操作人id" },
+        "orderIndex": {
+          "type": "integer",
+          "format": "int32",
+          "example": 1,
+          "description": "排序权重"
+        },
+        "projectType": {
+          "type": "string",
+          "description": "所属工程类型: [civil:土建工程, install:安装工程, other:其他工程]",
+          "enum": ["civil", "install", "other"]
+        }
+      },
+      "title": "Material"
+    },
+    "MaterialDto": {
+      "type": "object",
+      "required": ["guidePrice", "projectType"],
+      "properties": {
+        "companyMaterials": {
+          "type": "array",
+          "description": "材料关联品牌",
+          "items": { "$ref": "#/definitions/CompanyMaterial", "originalRef": "CompanyMaterial" }
+        },
+        "guidePrice": { "type": "number", "example": 999.99, "description": "指导价格" },
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "description": "ID主键，一般新增不传，编辑必传"
+        },
+        "materialImg": { "type": "string", "description": "材料图片" },
+        "materialName": {
+          "type": "string",
+          "description": "材料名称",
+          "minLength": 1,
+          "maxLength": 32
+        },
+        "materialRemark": { "type": "string", "description": "材料介绍" },
+        "materialTypes": {
+          "type": "array",
+          "description": "材料关联类型",
+          "items": { "$ref": "#/definitions/MaterialType", "originalRef": "MaterialType" }
+        },
+        "measureUnit": {
+          "type": "string",
+          "description": "计量单位",
+          "minLength": 1,
+          "maxLength": 32
+        },
+        "operId": { "type": "integer", "format": "int32", "description": "操作人id" },
+        "operName": { "type": "string", "description": "创建人名称" },
+        "orderIndex": {
+          "type": "integer",
+          "format": "int32",
+          "example": 1,
+          "description": "排序权重"
+        },
+        "projectType": {
+          "type": "string",
+          "description": "所属工程类型: [civil:土建工程, install:安装工程, other:其他工程]",
+          "enum": ["civil", "install", "other"]
+        }
+      },
+      "title": "MaterialDto",
+      "description": "材料信息业务"
+    },
+    "MaterialType": {
+      "type": "object",
+      "required": ["typeId"],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "description": "ID主键，一般新增不传，编辑必传"
+        },
+        "materialId": { "type": "integer", "format": "int32", "description": "材料id" },
+        "materialName": {
+          "type": "string",
+          "description": "材料名称",
+          "minLength": 1,
+          "maxLength": 32
+        },
+        "typeId": { "type": "integer", "format": "int32", "description": "类型id" },
+        "typeName": { "type": "string", "description": "类型名称", "minLength": 1, "maxLength": 32 }
+      },
+      "title": "MaterialType"
+    },
+    "PageResult«CompanyDto»": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "description": "结果数据",
+          "items": { "$ref": "#/definitions/CompanyDto", "originalRef": "CompanyDto" }
+        },
+        "size": { "type": "integer", "format": "int64", "description": "当前页条数" },
+        "total": { "type": "integer", "format": "int64", "description": "总条数" },
+        "totalPage": { "type": "integer", "format": "int64", "description": "总页数" }
+      },
+      "title": "PageResult«CompanyDto»"
+    },
+    "PageResult«MaterialDto»": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "description": "结果数据",
+          "items": { "$ref": "#/definitions/MaterialDto", "originalRef": "MaterialDto" }
+        },
+        "size": { "type": "integer", "format": "int64", "description": "当前页条数" },
+        "total": { "type": "integer", "format": "int64", "description": "总条数" },
+        "totalPage": { "type": "integer", "format": "int64", "description": "总页数" }
+      },
+      "title": "PageResult«MaterialDto»"
+    },
+    "PageResult«SysConfig»": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "description": "结果数据",
+          "items": { "$ref": "#/definitions/SysConfig", "originalRef": "SysConfig" }
+        },
+        "size": { "type": "integer", "format": "int64", "description": "当前页条数" },
+        "total": { "type": "integer", "format": "int64", "description": "总条数" },
+        "totalPage": { "type": "integer", "format": "int64", "description": "总页数" }
+      },
+      "title": "PageResult«SysConfig»"
+    },
+    "Result": {
+      "type": "object",
+      "properties": {
+        "result": { "type": "object", "description": "响应数据" },
+        "status": {
+          "description": "响应状态",
+          "$ref": "#/definitions/响应状态",
+          "originalRef": "响应状态"
+        }
+      },
+      "title": "Result"
+    },
+    "Result«CompanyDto»": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "description": "响应数据",
+          "$ref": "#/definitions/CompanyDto",
+          "originalRef": "CompanyDto"
+        },
+        "status": {
+          "description": "响应状态",
+          "$ref": "#/definitions/响应状态",
+          "originalRef": "响应状态"
+        }
+      },
+      "title": "Result«CompanyDto»"
+    },
+    "Result«List«Company»»": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "array",
+          "description": "响应数据",
+          "items": { "$ref": "#/definitions/Company", "originalRef": "Company" }
+        },
+        "status": {
+          "description": "响应状态",
+          "$ref": "#/definitions/响应状态",
+          "originalRef": "响应状态"
+        }
+      },
+      "title": "Result«List«Company»»"
+    },
+    "Result«List«Material»»": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "array",
+          "description": "响应数据",
+          "items": { "$ref": "#/definitions/Material", "originalRef": "Material" }
+        },
+        "status": {
+          "description": "响应状态",
+          "$ref": "#/definitions/响应状态",
+          "originalRef": "响应状态"
+        }
+      },
+      "title": "Result«List«Material»»"
+    },
+    "Result«List«SysConfig»»": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "array",
+          "description": "响应数据",
+          "items": { "$ref": "#/definitions/SysConfig", "originalRef": "SysConfig" }
+        },
+        "status": {
+          "description": "响应状态",
+          "$ref": "#/definitions/响应状态",
+          "originalRef": "响应状态"
+        }
+      },
+      "title": "Result«List«SysConfig»»"
+    },
+    "Result«MaterialDto»": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "description": "响应数据",
+          "$ref": "#/definitions/MaterialDto",
+          "originalRef": "MaterialDto"
+        },
+        "status": {
+          "description": "响应状态",
+          "$ref": "#/definitions/响应状态",
+          "originalRef": "响应状态"
+        }
+      },
+      "title": "Result«MaterialDto»"
+    },
+    "Result«PageResult«CompanyDto»»": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "description": "响应数据",
+          "$ref": "#/definitions/PageResult«CompanyDto»",
+          "originalRef": "PageResult«CompanyDto»"
+        },
+        "status": {
+          "description": "响应状态",
+          "$ref": "#/definitions/响应状态",
+          "originalRef": "响应状态"
+        }
+      },
+      "title": "Result«PageResult«CompanyDto»»"
+    },
+    "Result«PageResult«MaterialDto»»": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "description": "响应数据",
+          "$ref": "#/definitions/PageResult«MaterialDto»",
+          "originalRef": "PageResult«MaterialDto»"
+        },
+        "status": {
+          "description": "响应状态",
+          "$ref": "#/definitions/响应状态",
+          "originalRef": "响应状态"
+        }
+      },
+      "title": "Result«PageResult«MaterialDto»»"
+    },
+    "Result«PageResult«SysConfig»»": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "description": "响应数据",
+          "$ref": "#/definitions/PageResult«SysConfig»",
+          "originalRef": "PageResult«SysConfig»"
+        },
+        "status": {
+          "description": "响应状态",
+          "$ref": "#/definitions/响应状态",
+          "originalRef": "响应状态"
+        }
+      },
+      "title": "Result«PageResult«SysConfig»»"
+    },
+    "Result«SysConfig»": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "description": "响应数据",
+          "$ref": "#/definitions/SysConfig",
+          "originalRef": "SysConfig"
+        },
+        "status": {
+          "description": "响应状态",
+          "$ref": "#/definitions/响应状态",
+          "originalRef": "响应状态"
+        }
+      },
+      "title": "Result«SysConfig»"
+    },
+    "SysConfig": {
+      "type": "object",
+      "required": ["confName", "confType"],
+      "properties": {
+        "confCode": {
+          "type": "string",
+          "description": "配置项编码",
+          "minLength": 1,
+          "maxLength": 32
+        },
+        "confIcon": { "type": "string", "description": "图标", "minLength": 1, "maxLength": 128 },
+        "confName": {
+          "type": "string",
+          "description": "配置项名称",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "confRemark": { "type": "string", "description": "备注说明" },
+        "confType": {
+          "type": "string",
+          "description": "模块类型: [companyLevel:品牌评级, materialType:材料类型, companyField:品牌领域]",
+          "enum": ["companyLevel", "materialType", "companyField"]
+        },
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "description": "ID主键，一般新增不传，编辑必传"
+        },
+        "operId": { "type": "integer", "format": "int32", "description": "创建人id" },
+        "operName": { "type": "string", "description": "创建人名称" },
+        "orderIndex": {
+          "type": "integer",
+          "format": "int32",
+          "example": 1,
+          "description": "排序权重"
+        },
+        "parentId": { "type": "integer", "format": "int32", "description": "父级id" }
+      },
+      "title": "SysConfig"
+    },
+    "响应状态": {
+      "type": "object",
+      "properties": {
+        "code": { "type": "integer", "format": "int32", "example": 1, "description": "响应码" },
+        "message": { "type": "string", "example": "请求成功", "description": "响应信息" }
+      },
+      "title": "响应状态"
+    }
+  }
+}

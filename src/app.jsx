@@ -60,7 +60,7 @@ export const layout = ({ initialState, setInitialState }) => {
     //   content: initialState?.currentUser?.name,
     // },
     menuItemRender: (item, defaultDom) => {
-      console.log('menuItemRender', item);
+      // console.log('menuItemRender', item);
 
       console.log(item);
       if (item.pro_layout_parentKeys.length == 0) {

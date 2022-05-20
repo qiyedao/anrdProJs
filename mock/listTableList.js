@@ -93,6 +93,7 @@ function getRule(req, res, u) {
 
   const result = {
     data: dataSource,
+
     total: tableListDataSource.length,
     success: true,
     pageSize,

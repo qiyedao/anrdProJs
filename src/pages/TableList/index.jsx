@@ -7,7 +7,7 @@ import ProTable from '@ant-design/pro-table';
 import { ModalForm, ProFormText, ProFormTextArea } from '@ant-design/pro-form';
 import ProDescriptions from '@ant-design/pro-descriptions';
 import UpdateForm from './components/UpdateForm';
-import { list, add, update, remove } from '@/services/ant-design-pro/api';
+import { list, add, update, remove } from '@/services/ant-design-pro/rule';
 import { pagination, columnEmptyText } from '@/config/constant';
 import SearchForm from '@/components/Form/SearchForm';
 import EditBtn from '@/components/Form/components/Button/EditBtn';
@@ -397,10 +397,6 @@ const TableList = () => {
           handleDeleteModalVisible(false);
         }}
         visible={deleteModalVisible}
-      />
-      <ShowOrEditUpload
-        // url={'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'}
-        isButton={true}
       />
 
       {/* <ModalForm

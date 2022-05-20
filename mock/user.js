@@ -18,7 +18,7 @@ const { ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION } = process.env;
  * 如果是 pro 的预览，默认是有权限的
  */
 
-let access = ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION === 'site' ? 'admin' : '';
+let access = ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION === 'site' ? 'admin' : 'admin';
 
 const getAccess = () => {
   return access;
@@ -121,11 +121,25 @@ export default {
 
     if (password === 'ant.design' && username === 'admin') {
       res.send({
-        status: 'ok',
+        status: {
+          code: 1,
+          message: 'success',
+        },
         type,
         currentAuthority: 'admin',
       });
       access = 'admin';
+      return;
+    } else {
+      res.send({
+        status: {
+          code: -2,
+          message: 'unknown error',
+        },
+        type,
+        currentAuthority: '',
+      });
+      access = '';
       return;
     }
 
@@ -182,7 +196,10 @@ export default {
   'GET /api/404': (req, res) => {
     res.status(404).send({
       timestamp: 1513932643431,
-      status: 404,
+      status: {
+        code: 404,
+        messag: '404',
+      },
       error: 'Not Found',
       message: 'No message available',
       path: '/base/category/list/2121212',
