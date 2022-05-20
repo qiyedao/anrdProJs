@@ -9,7 +9,7 @@ const NoFoundPage = () => (
     subTitle="对不起，您访问的页面不存在"
     extra={
       <Button type="primary" onClick={() => history.push('/')}>
-        回首页
+        首页
       </Button>
     }
   />

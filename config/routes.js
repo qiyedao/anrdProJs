@@ -18,7 +18,6 @@ export default [
     name: 'welcome',
     hideInMenu: true,
     component: './Welcome',
-    customLevel: 1,
   },
   {
     path: '/admin',
