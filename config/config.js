@@ -1,9 +1,10 @@
 // https://umijs.org/config/
 import { defineConfig } from 'umi';
-import { join } from 'path';
 import defaultSettings from './defaultSettings';
 import proxy from './proxy';
 import routes from './routes';
+import theme from './theme';
+import openAPI from './openAPI';
 const { REACT_APP_ENV } = process.env;
 export default defineConfig({
   hash: true,
@@ -36,23 +37,8 @@ export default defineConfig({
   routes,
   access: {},
   // Theme for antd: https://ant.design/docs/react/customize-theme-cn
-  theme: {
-    // 如果不想要 configProvide 动态设置主题需要把这个设置为 default
-    // 只有设置为 variable， 才能使用 configProvide 动态设置主色调
-    // https://ant.design/docs/react/customize-theme-variable-cn
-    'primary-color': '#3362FA',
-    'text-color': '#0E2949',
-    'pagination-item-bg': 'rgba(246, 247, 251, 1)',
-    'pagination-item-bg-active': 'rgba(51, 98, 250, 1)',
-    'pagination-item-link-bg': 'rgba(246, 247, 251, 1)',
-    'border-radius-base': '4px',
-    'table-header-cell-split-color': 'transparent',
-    'table-header-bg': 'rgba(237, 239, 242, 1)',
-    'table-border-radius-base': '0px',
-  },
-  // esbuild is father build tools
-  // https://umijs.org/plugins/plugin-esbuild
-  esbuild: {},
+  theme,
+
   title: false,
   ignoreMomentLocale: true,
   proxy: proxy[REACT_APP_ENV || 'dev'],
@@ -61,26 +47,34 @@ export default defineConfig({
   },
   // Fast Refresh 热更新
   fastRefresh: {},
-  openAPI: [
-    {
-      requestLibPath: "import request from '@/utils/request'",
-      // 或者使用在线的版本
-      // schemaPath: "https://gw.alipayobjects.com/os/antfincdn/M%24jrzTTYJN/oneapi.json"
-      schemaPath: join(__dirname, 'oneapi3.json'),
-      mock: false,
-      projectName: 'swagger2',
-    },
-    // {
-    //   requestLibPath: "import request from '@/utils/request'",
-    //   schemaPath:
-    //     'http://106.15.206.62:8097/v2/api-docs?group=%E5%85%A8%E9%83%A8%E6%8E%A5%E5%8F%A3%E6%96%87%E6%A1%A3',
-    //   projectName: 'swagger',
-    // },
-  ],
+  openAPI,
   nodeModulesTransform: {
     type: 'none',
   },
   // mfsu: {},
   // webpack5: {},
   exportStatic: {},
+  // chainWebpack(config, webpack) {
+  //   console.log(JSON.stringify(config));
+  // },
+  terserOptions: {
+    compress: {
+      drop_console: true,
+    },
+  },
+  // chunks: ['umi', 'vendors'],
+  // chainWebpack: (config) => {
+  //   config.optimization.splitChunks({
+  //     chunks: 'all',
+  //     minSize: 30000,
+  //     minChunks: 1,
+  //     cacheGroups: {
+  //       vendors: {
+  //         name: 'vendors',
+  //         test: /[\\/]node_modules[\\/]/,
+  //         priority: 0,
+  //       },
+  //     },
+  //   });
+  // },
 });
