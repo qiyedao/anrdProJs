@@ -81,6 +81,6 @@ export default defineConfig({
     type: 'none',
   },
   // mfsu: {},
-  webpack5: {},
+  // webpack5: {},
   exportStatic: {},
 });
