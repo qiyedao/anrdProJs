@@ -53,7 +53,7 @@ export default defineConfig({
   },
   // mfsu: {},
   // webpack5: {},
-  // exportStatic: {},
+  exportStatic: {},
   // chainWebpack(config, webpack) {
   //   console.log(JSON.stringify(config));
   // },
