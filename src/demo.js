@@ -74,6 +74,7 @@ const App = () => {
           <div style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
             <div style={{ maxWidth: 300, overflow: 'hidden' }}>
               <a
+                rel="noopener noreferrer"
                 style={{
                   color: file.status == 'error' ? 'red' : 'blue',
                   marginRight: 10,

@@ -70,6 +70,7 @@ const sendStream = async (res, req, extname, filePath) => {
 };
 
 const sendFile = async (res, req, extname, filePath) => {
+  console.log('filePath', filePath);
   if (!fs.existsSync(filePath)) return;
   switch (extname) {
     case '.css':

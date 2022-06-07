@@ -1,3 +1,4 @@
+import React from 'react';
 import { SettingDrawer } from '@ant-design/pro-layout';
 import { PageLoading } from '@ant-design/pro-layout';
 import { history, Link } from 'umi';

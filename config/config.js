@@ -12,7 +12,7 @@ export default defineConfig({
   dva: {
     hmr: true,
   },
-  // ssr: {},
+  ssr: {},
   layout: {
     // https://umijs.org/zh-CN/plugins/plugin-layout
     locale: true,
@@ -30,9 +30,9 @@ export default defineConfig({
   dynamicImport: {
     loading: '@ant-design/pro-layout/es/PageLoading',
   },
-  targets: {
-    ie: 11,
-  },
+  // targets: {
+  //   ie: 11,
+  // },
   // umi routes: https://umijs.org/docs/routing
   routes,
   access: {},
@@ -53,15 +53,15 @@ export default defineConfig({
   },
   // mfsu: {},
   // webpack5: {},
-  exportStatic: {},
+  // exportStatic: {},
   // chainWebpack(config, webpack) {
   //   console.log(JSON.stringify(config));
   // },
-  terserOptions: {
-    compress: {
-      drop_console: true,
-    },
-  },
+  // terserOptions: {
+  //   compress: {
+  //     drop_console: true,
+  //   },
+  // },
   // chunks: ['umi', 'vendors'],
   // chainWebpack: (config) => {
   //   config.optimization.splitChunks({
