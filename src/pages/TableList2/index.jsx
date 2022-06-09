@@ -349,8 +349,29 @@ const TableList = () => {
         actionRef={actionRef}
         formRef={formRef}
         rowKey="key"
-        search={{ optionRender: () => null }}
-        toolBarRender={false}
+        toolBarRender={[
+          <Button
+            style={{ marginRight: 16 }}
+            htmlType="reset"
+            key="reset"
+            onClick={() => {
+              console.log('formRef.current.getFieldsValue()', formRef.current.getFieldsValue());
+
+              actionRef?.current.resetAndSubmit();
+            }}
+          >
+            重置1
+          </Button>,
+          <Button
+            onClick={() => {
+              actionRef?.current.submit();
+            }}
+            key="search"
+            type="primary"
+          >
+            查询1
+          </Button>,
+        ]}
         request={handleRequest}
         // bordered
         columns={columns}

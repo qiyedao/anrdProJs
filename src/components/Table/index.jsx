@@ -8,14 +8,16 @@ const ProTable = ({
   paginationLeft,
   paginationRight,
   onChange,
-  dataSource,
+  toolBarRender,
   search = true,
   request,
+  actionRef,
+  formRef,
 }) => {
   const [searchColumns, setSearchColumns] = useState([]);
   const [current, setCurrent] = useState(1);
   const [pageSize, setPageSize] = useState(20);
-  const [tableDataSource, setDataSource] = useState([]);
+  const [dataSource, setDataSource] = useState([]);
   const [formValues, setFormValues] = useState({});
 
   const [total, setTotal] = useState(0);
@@ -23,7 +25,53 @@ const ProTable = ({
   useEffect(() => {
     handdleSearchColumns();
     handleRequest({ current: 1 });
+    handleActionRef();
+    formRef.current = searchFormRef.current;
   }, []);
+
+  const handleActionRef = () => {
+    //刷新reload
+    // 刷新并清空,页码也会重置，不包括表单reloadAndRest
+    // 重置到默认值，包括表单reset
+    //重置所有并查询resetAndSubmit
+    //查询 submit
+    actionRef.current = {
+      reload,
+      reloadAndRest,
+      reset,
+      resetAndSubmit,
+      submit,
+    };
+  };
+
+  const reload = () => {
+    handleRequest({ current });
+  };
+
+  const reloadAndRest = (pageNumber = 1) => {
+    handleRequest({ current: pageNumber });
+  };
+
+  const reset = () => {
+    searchFormRef?.current.resetFields();
+    setFormValues({});
+  };
+
+  const resetAndSubmit = () => {
+    searchFormRef?.current.resetFields();
+    handleRequest({ current: 1, pageSize }, {}, true);
+  };
+
+  //分页
+  const handleChangeNumber = (page) => {
+    handleRequest({ current: page, pageSize });
+  };
+  //收集表单
+  const submit = () => {
+    searchFormRef?.current.validateFields().then((values) => {
+      handleRequest({ current: 1, pageSize }, values);
+    });
+  };
 
   //获取数据
   const handleRequest = (originParams = {}, values, isReset = false) => {
@@ -58,16 +106,6 @@ const ProTable = ({
       });
     setSearchColumns(columnsForSearch);
   };
-  //分页
-  const handleChangeNumber = (page) => {
-    handleRequest({ current: page, pageSize });
-  };
-  //收集表单
-  const handleFormValues = () => {
-    searchFormRef?.current.validateFields().then((values) => {
-      handleRequest({ current: 1, pageSize }, values);
-    });
-  };
 
   return (
     <div>
@@ -75,24 +113,28 @@ const ProTable = ({
         searchColumns={searchColumns}
         searchFormRef={searchFormRef}
         span={3}
-        toolBarRender={[
-          <Button
-            style={{ marginRight: 16 }}
-            htmlType="reset"
-            key="reset"
-            onClick={() => {
-              handleRequest({ current: 1, pageSize }, {}, true);
-            }}
-          >
-            重置
-          </Button>,
-          <Button onClick={handleFormValues} key="search" type="primary">
-            查询
-          </Button>,
-        ]}
+        toolBarRender={
+          toolBarRender
+            ? toolBarRender
+            : [
+                <Button
+                  style={{ marginRight: 16 }}
+                  htmlType="reset"
+                  key="reset"
+                  onClick={() => {
+                    handleRequest({ current: 1, pageSize }, {}, true);
+                  }}
+                >
+                  重置
+                </Button>,
+                <Button onClick={submit} key="search" type="primary">
+                  查询
+                </Button>,
+              ]
+        }
       />
-      <Table columns={columns} dataSource={tableDataSource} pagination={false} />
-      {tableDataSource.length ? (
+      <Table columns={columns} dataSource={dataSource} pagination={false} />
+      {dataSource.length ? (
         <div className={'custom-pagination-container'}>
           {paginationLeft ? paginationLeft : null}
           <div>
