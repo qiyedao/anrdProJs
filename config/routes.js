@@ -69,14 +69,14 @@ export default [
     ],
   },
   {
-    name: 'list.table-list',
+    name: 'list',
     icon: 'table',
     path: '/list',
     component: './TableList',
     customLevel: 1,
   },
   {
-    name: 'list.table-list',
+    name: 'list2',
     icon: 'table',
     path: '/list2',
     component: './TableList2',

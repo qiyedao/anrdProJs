@@ -1,5 +1,5 @@
-import { Table, Button, Pagination } from 'antd';
-import SearchForm from '@/components/Form/SearchForm';
+import SearchForm from '@/components/CustomForm/SearchForm';
+import { Button, Pagination, Table } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 import './index.less';
 const ProTable = ({
@@ -12,6 +12,7 @@ const ProTable = ({
   search = true,
   request,
   actionRef,
+
   formRef,
 }) => {
   const [searchColumns, setSearchColumns] = useState([]);

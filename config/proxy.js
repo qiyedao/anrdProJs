@@ -6,12 +6,14 @@
  * For details, please see
  * https://pro.ant.design/docs/deploy
  */
+const isDev = process.env.NODE_ENV === 'development';
+
 export default {
   // dev: {
   //   // localhost:8000/api/** -> https://preview.pro.ant.design/api/**
   //   '/api/': {
   //     // 要代理的地址
-  //     target: 'https://preview.pro.ant.design',
+  //     target:  isDev ?'https://preview.pro.ant.design': '', //dev 开启,
   //     // 配置了这个可以从 http 代理到 https
   //     // 依赖 origin 的功能可能需要这个，比如 cookie
   //     changeOrigin: true,

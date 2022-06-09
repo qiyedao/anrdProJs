@@ -1,9 +1,19 @@
+import { InputNumber, Select } from 'antd';
 import React, { useState } from 'react';
-import { Form, Input, Select, Button } from 'antd';
 const { Option } = Select;
-const PriceInput = ({ value = {}, onChange }) => {
-  const [number, setNumber] = useState(0);
-  const [currency, setCurrency] = useState('rmb');
+const PriceInput = ({
+  value = {},
+  onChange,
+  options = [],
+  selectWidth,
+  width,
+  step = 1,
+  precision = 0,
+  placeholder = ['', ''],
+  containerStyle = {},
+}) => {
+  const [number, setNumber] = useState(null);
+  const [currency, setCurrency] = useState(null);
 
   const triggerChange = (changedValue) => {
     onChange?.({
@@ -15,11 +25,7 @@ const PriceInput = ({ value = {}, onChange }) => {
   };
 
   const onNumberChange = (e) => {
-    const newNumber = parseInt(e.target.value || '0', 10);
-
-    if (Number.isNaN(number)) {
-      return;
-    }
+    const newNumber = e;
 
     if (!('number' in value)) {
       setNumber(newNumber);
@@ -41,27 +47,27 @@ const PriceInput = ({ value = {}, onChange }) => {
   };
 
   return (
-    <span>
-      <Input
-        type="text"
+    <div
+      style={{ display: 'flex', justifyContent: 'space-between', width: '100%', ...containerStyle }}
+    >
+      <InputNumber
         value={value.number || number}
         onChange={onNumberChange}
-        style={{
-          width: 100,
-        }}
+        step={step}
+        placeholder={placeholder[0]}
+        precision={precision}
+        style={{ width: width || 100 }}
       />
       <Select
         value={value.currency || currency}
+        placeholder={placeholder[1]}
         style={{
-          width: 80,
-          margin: '0 8px',
+          width: selectWidth || 80,
         }}
+        options={options}
         onChange={onCurrencyChange}
-      >
-        <Option value="rmb">RMB</Option>
-        <Option value="dollar">Dollar</Option>
-      </Select>
-    </span>
+      />
+    </div>
   );
 };
 

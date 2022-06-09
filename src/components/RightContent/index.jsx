@@ -44,7 +44,7 @@ const GlobalHeaderRight = () => {
             value: 'Pro Layout',
           },
         ]} // onSearch={value => {
-        //   console.log('input', value);
+        //   console.log('Input', value);
         // }}
       /> */}
       {/* <span

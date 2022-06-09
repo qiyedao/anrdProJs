@@ -1,31 +1,50 @@
-import React from 'react';
-import './index.less';
-import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import RightContent from '@/components/RightContent';
+import { PageHeaderWrapper } from '@ant-design/pro-layout';
+import { useIntl } from 'umi';
+import './index.less';
 import ContentLayout from './Layout/layout';
+const ignoreBreadCrumb = ['/welcome'];
+const ignoreLayout = ['/console/home/home'];
 const Content = ({ children }) => {
-  const breadcrumbRender = ({ currentMenu, breadcrumb }) => {
-    let breadcrumbList = [];
-    if (currentMenu.hideInMenu) {
+  const intl = useIntl();
+  const handleMessage = (localeList) => {
+    let temp = [];
+    for (let i = 1; i < localeList.length; i++) {
+      const defaultLoginSuccessMessage = intl.formatMessage({
+        id: localeList.slice(0, i + 1).join('.'),
+      });
+      temp.push(defaultLoginSuccessMessage);
+    }
+    return temp;
+  };
+  const breadcrumbRender = (e) => {
+    const { currentMenu, breadcrumb } = e;
+
+    if (!currentMenu || ignoreBreadCrumb.includes(currentMenu.path)) {
       return (
         <div className="custom-page-header">
           <RightContent />
         </div>
       );
     }
-    if (breadcrumb.routes) {
-      breadcrumb.routes.map((item, index) => {
+
+    let nameList = [];
+
+    const localeList = currentMenu?.locale && currentMenu?.locale?.split('.').slice(0);
+
+    let breadcrumbList = [];
+
+    if (localeList && localeList.length > 1) {
+      nameList = handleMessage(localeList);
+
+      nameList.map((item, index) => {
         breadcrumbList.push(
           <div
             key={'breadcrumbName' + index}
-            className={index === breadcrumb.routes.length - 1 ? 'custom-breadcrumb-active' : ''}
+            className={index === nameList.length - 1 ? 'custom-breadcrumb-active' : ''}
           >
-            {item.breadcrumbName}
-            {index !== breadcrumb.routes.length - 1 ? (
-              <div className="custom-breadcrumb-line">/</div>
-            ) : (
-              ''
-            )}
+            {item}
+            {index !== nameList.length - 1 ? <div className="custom-breadcrumb-line">/</div> : ''}
           </div>,
         );
       });
@@ -43,7 +62,9 @@ const Content = ({ children }) => {
       </div>
     );
   };
-  return (
+  return ignoreLayout.includes(window.location.pathname) ? (
+    <div className={'custom-no-layout'}>{children}</div>
+  ) : (
     <PageHeaderWrapper
       header={{
         title: '',

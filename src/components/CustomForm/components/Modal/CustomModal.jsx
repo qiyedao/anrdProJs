@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Modal, Button } from 'antd';
+import { Button, Modal } from 'antd';
 import classNames from 'classnames';
+import React from 'react';
 import './index.less';
 export default ({
   children,
@@ -24,6 +24,8 @@ export default ({
   footerBorder = false,
   titleStyle,
   rigitTitleStyle,
+
+  width,
 }) => {
   const renderButton = () => {
     if (footer) {
@@ -37,7 +39,7 @@ export default ({
           }}
           key={'ok'}
           type="primary"
-          style={okStyle || { marginRight: 16, width: 75 }}
+          style={okStyle || { marginRight: 16 }}
         >
           {okText ? okText : '确定'}
         </Button>,
@@ -46,7 +48,7 @@ export default ({
             onCancel && onCancel();
           }}
           key={'cancel'}
-          style={cancelStyle || { width: 75 }}
+          style={cancelStyle || {}}
         >
           {cancelText ? cancelText : '取消'}
         </Button>,
@@ -57,9 +59,14 @@ export default ({
     <Modal
       footer={null}
       closable={closable || false}
-      closeIcon={<div>hello</div>}
       visible={visible}
       bodyStyle={bodyStyle || {}}
+      width={width || 520}
+      onCancel={() => {
+        if (footer && footer.length == 0) {
+          onCancel();
+        }
+      }}
     >
       <div
         className={classNames(

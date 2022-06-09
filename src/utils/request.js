@@ -1,8 +1,9 @@
 /** Request 网络请求工具 更详细的 api 文档: https://github.com/umijs/umi-request */
+import { notification } from 'antd';
 import { extend } from 'umi-request';
-import { message, notification } from 'antd';
-import { getPageQuery } from '@/utils/utils';
-import { stringify } from 'querystring';
+import { IsNoExist } from './utils';
+const isDev = process.env.NODE_ENV === 'development';
+
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
   201: '新增或修改数据成功。',
@@ -51,21 +52,37 @@ request.interceptors.request.use((url, options) => {
 request.interceptors.response.use(async (response) => {
   const { url } = response;
   console.log('interceptors response===>', 'response', response);
-
+  const IgnoreJSON = [];
   let data = '';
-  if (response.url.indexOf('excel/export') == -1 && response.url.indexOf('api/file/video') == -1) {
+  if (IsNoExist(response.url, IgnoreJSON)) {
     data = await response.clone().json();
     console.log('response', data);
   }
-  if (data && data.status && data.status.code !== undefined) {
+  const token = window.sessionStorage.getItem('token');
+
+  // if (data.status.code !== -1 && !token) {
+  //   //拦截未登录
+  //   window.location.href = Apis.Auth;
+  // }
+  if (
+    data &&
+    data.status &&
+    data.status.code !== undefined &&
+    data.status.code !== 1 &&
+    data.status.code !== 2 &&
+    data.status.code !== 2211
+  ) {
     //return manual status;
     const errorText = codeMessage[data.status.code] || '';
     const errorCode = data.status.code;
-    notification.error({
-      message: `请求错误：${url}`,
-      description: `错误码：${errorCode || ''}`,
-      key: 'errorCode',
-    });
+    if (isDev) {
+      notification.error({
+        message: `请求错误：${url}`,
+        description: `错误码：${errorCode || ''}`,
+        key: 'errorCode',
+      });
+    }
+
     throw new Error(data.status.message || errorText || 'Error');
   }
   if (data && data.error) {

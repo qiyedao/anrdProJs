@@ -1,27 +1,35 @@
-import React, { useCallback } from 'react';
-import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
+import Apis from '@/services/Apis';
+import { outLogin } from '@/services/user/user';
+import { LogoutOutlined } from '@ant-design/icons';
 import { Avatar, Menu, Spin } from 'antd';
-import { history, useModel } from 'umi';
 import { stringify } from 'querystring';
+import React, { useCallback } from 'react';
+import { history, useModel } from 'umi';
 import HeaderDropdown from '../HeaderDropdown';
 import styles from './index.less';
-import { outLogin } from '@/services/ant-design-pro/login';
 
 /**
  * 退出登录，并且将当前的 url 保存
  */
 const loginOut = async () => {
-  await outLogin();
-  const { query = {}, search, pathname } = history.location;
-  const { redirect } = query; // Note: There may be security issues, please note
+  sessionStorage.clear();
+  if (Apis.LogOut.includes('http')) {
+    //三方授权退出
+    window.location.href = Apis.LogOut;
+  } else {
+    //内部退出
+    await outLogin();
+    const { query = {}, search, pathname } = history.location;
+    const { redirect } = query; // Note: There may be security issues, please note
 
-  if (window.location.pathname !== '/user/login' && !redirect) {
-    history.replace({
-      pathname: '/user/login',
-      search: stringify({
-        redirect: pathname + search,
-      }),
-    });
+    if (window.location.pathname !== '/console/home/home' && !redirect) {
+      history.replace({
+        pathname: '/console/home/home',
+        search: stringify({
+          redirect: pathname + search,
+        }),
+      });
+    }
   }
 };
 
@@ -65,7 +73,7 @@ const AvatarDropdown = ({ menu }) => {
 
   const menuHeaderDropdown = (
     <Menu className={styles.menu} selectedKeys={[]} onClick={onMenuClick}>
-      {menu && (
+      {/* {menu && (
         <Menu.Item key="center">
           <UserOutlined />
           个人中心
@@ -77,23 +85,23 @@ const AvatarDropdown = ({ menu }) => {
           个人设置
         </Menu.Item>
       )}
-      {menu && <Menu.Divider />}
+      {menu && <Menu.Divider />} */}
 
-      {/* <Menu.Item key="logout">
+      <Menu.Item key="logout">
         <LogoutOutlined />
         退出登录
-      </Menu.Item> */}
+      </Menu.Item>
     </Menu>
   );
   return (
-    // <HeaderDropdown overlay={menuHeaderDropdown}>
-    <span className={`${styles.action} ${styles.account}`}>
-      <Avatar size="small" className={styles.avatar} src={currentUser.avatar} alt="avatar" />
-      <span className={`${styles.name} anticon ${styles['custom-usesrName']}`}>
-        {currentUser.name}
+    <HeaderDropdown overlay={menuHeaderDropdown}>
+      <span className={`${styles.action} ${styles.account}`}>
+        <Avatar size="small" className={styles.avatar} src={currentUser.avatar} alt="avatar" />
+        <span className={`${styles.name} anticon ${styles['custom-usesrName']}`}>
+          {currentUser.name}
+        </span>
       </span>
-    </span>
-    // </HeaderDropdown>
+    </HeaderDropdown>
   );
 };
 

@@ -1,15 +1,15 @@
 import React from 'react';
+import CustomIcon from '../assets/edit.png';
 import CustomBtn from './CustomBtn';
-import CustomIcon from '../assets/del.png';
-export default ({ onClick }) => {
+export default ({ onClick, disabled }) => {
   return (
     <CustomBtn
-      textStyle={{ color: 'rgba(232, 37, 52, 1)' }}
+      disabled={disabled}
       onClick={() => {
         onClick();
       }}
       icon={CustomIcon}
-      text="删除"
+      text="编辑"
     />
   );
 };

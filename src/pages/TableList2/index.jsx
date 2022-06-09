@@ -1,20 +1,16 @@
-import { PlusOutlined } from '@ant-design/icons';
-import { Button, message, Input, Drawer } from 'antd';
-import React, { useState, useRef, useEffect } from 'react';
-import { useIntl, FormattedMessage } from 'umi';
-import { PageContainer, FooterToolbar } from '@ant-design/pro-layout';
-import ProTable from '@/components/Table/index';
-import { ModalForm, ProFormText, ProFormTextArea } from '@ant-design/pro-form';
-import ProDescriptions from '@ant-design/pro-descriptions';
-import UpdateForm from './components/UpdateForm';
-import { list, add, update, remove } from '@/services/ant-design-pro/rule';
-import { pagination, columnEmptyText } from '@/config/constant';
+import { Button, Input, message } from 'antd';
+import { useRef, useState } from 'react';
+import { FormattedMessage, useIntl } from 'umi';
 
-import EditBtn from '@/components/Form/components/Button/EditBtn';
-import DeleteBtn from '@/components/Form/components/Button/DeleteBtn';
-import DeleteModal from '@/components/Form/components/Modal/DeleteModal';
-import UpdateModal from '@/components/Form/components/Modal/UpdateModal';
-import ShowOrEditUpload from '@/components/showOrEditUpload';
+import DeleteBtn from '@/components/CustomForm/components/ButtonList/DeleteBtn';
+import EditBtn from '@/components/CustomForm/components/ButtonList/EditBtn';
+import DeleteModal from '@/components/CustomForm/components/Modal/DeleteModal';
+import UpdateModal from '@/components/CustomForm/components/Modal/UpdateModal';
+import ProTable from '@/components/Table/index';
+import { pagination } from '@/config/constant';
+
+import { add, list, remove, update } from '@/services/ant-design-pro/api';
+
 /**
  * @en-US Add node
  * @zh-CN 添加节点

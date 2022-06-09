@@ -1,20 +1,15 @@
-import { PlusOutlined } from '@ant-design/icons';
-import { Button, message, Input, Drawer } from 'antd';
-import React, { useState, useRef, useEffect } from 'react';
-import { useIntl, FormattedMessage } from 'umi';
-import { PageContainer, FooterToolbar } from '@ant-design/pro-layout';
-import ProTable from '@ant-design/pro-table';
-import { ModalForm, ProFormText, ProFormTextArea } from '@ant-design/pro-form';
-import ProDescriptions from '@ant-design/pro-descriptions';
-import UpdateForm from './components/UpdateForm';
-import { list, add, update, remove } from '@/services/ant-design-pro/rule';
-import { pagination, columnEmptyText } from '@/config/constant';
-import SearchForm from '@/components/Form/SearchForm';
-import EditBtn from '@/components/Form/components/Button/EditBtn';
-import DeleteBtn from '@/components/Form/components/Button/DeleteBtn';
-import DeleteModal from '@/components/Form/components/Modal/DeleteModal';
-import UpdateModal from '@/components/Form/components/Modal/UpdateModal';
+import DeleteBtn from '@/components/CustomForm/components/ButtonList/DeleteBtn';
+import EditBtn from '@/components/CustomForm/components/ButtonList/EditBtn';
+import DeleteModal from '@/components/CustomForm/components/Modal/DeleteModal';
+import UpdateModal from '@/components/CustomForm/components/Modal/UpdateModal';
+import SearchForm from '@/components/CustomForm/SearchForm';
 import ShowOrEditUpload from '@/components/showOrEditUpload';
+import { columnEmptyText, pagination } from '@/config/constant';
+import { add, list, remove, update } from '@/services/ant-design-pro/api';
+import ProTable from '@ant-design/pro-table';
+import { Button, Input, message } from 'antd';
+import { useRef, useState } from 'react';
+import { FormattedMessage, useIntl } from 'umi';
 /**
  * @en-US Add node
  * @zh-CN 添加节点
@@ -163,7 +158,6 @@ const TableList = () => {
       dataIndex: 'name',
       align: 'center',
       search: true,
-      type: 'input',
       tip: 'The rule name is the unique key',
       render: (dom, entity) => {
         return (
@@ -208,15 +202,7 @@ const TableList = () => {
       dataIndex: 'status',
       hideInForm: true,
       align: 'center',
-      type: 'select',
 
-      fieldProps: {
-        width: '200px',
-        options: [
-          { label: '1111', value: 1111 },
-          { label: '000', value: '000' },
-        ],
-      },
       valueEnum: {
         0: {
           text: (
@@ -311,7 +297,7 @@ const TableList = () => {
     {
       name: 'name',
       labelName: '规则名称',
-      type: 'input',
+      type: 'Input',
     },
     {
       name: 'number',
@@ -321,10 +307,10 @@ const TableList = () => {
     {
       name: 'status',
       labelName: '状态',
-      type: 'select',
+      type: 'Select',
 
       fieldProps: {
-        width: '200px',
+        width: '178px',
         options: [
           { label: '1111', value: 1111 },
           { label: '000', value: '000' },
@@ -349,10 +335,8 @@ const TableList = () => {
         searchColumns={searchColumns}
         span={3}
         toolBarRender={[
-          <Button style={{ marginRight: 16 }} htmlType="reset" key="reset">
-            重置
-          </Button>,
           <Button
+            style={{ marginRight: 16 }}
             onClick={() => {
               formRef?.current.submit();
             }}
@@ -360,6 +344,9 @@ const TableList = () => {
             type="primary"
           >
             查询
+          </Button>,
+          <Button htmlType="reset" key="reset">
+            重置
           </Button>,
         ]}
         labelStyle={{
@@ -370,7 +357,7 @@ const TableList = () => {
       <ProTable
         actionRef={actionRef}
         formRef={formRef}
-        rowKey="key"
+        rowKey="id"
         search={{ optionRender: () => null }}
         toolBarRender={false}
         request={handleRequest}
@@ -381,7 +368,7 @@ const TableList = () => {
         //     setSelectedRows(selectedRows);
         //   },
         // }}
-        columnEmptyText={'--'}
+        columnEmptyText={columnEmptyText}
         pagination={{
           ...pagination,
         }}
@@ -406,6 +393,10 @@ const TableList = () => {
           handleDeleteModalVisible(false);
         }}
         visible={deleteModalVisible}
+      />
+      <ShowOrEditUpload
+        // url={'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'}
+        isButton={true}
       />
 
       {/* <ModalForm
