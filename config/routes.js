@@ -76,6 +76,13 @@ export default [
     customLevel: 1,
   },
   {
+    name: 'list.table-list',
+    icon: 'table',
+    path: '/list2',
+    component: './TableList2',
+    customLevel: 1,
+  },
+  {
     path: '/',
     redirect: '/welcome',
   },

@@ -12,7 +12,7 @@ export default defineConfig({
   dva: {
     hmr: true,
   },
-  ssr: {},
+  // ssr: {},
   layout: {
     // https://umijs.org/zh-CN/plugins/plugin-layout
     locale: true,

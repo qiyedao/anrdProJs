@@ -3,13 +3,13 @@ import { Button, message, Input, Drawer } from 'antd';
 import React, { useState, useRef, useEffect } from 'react';
 import { useIntl, FormattedMessage } from 'umi';
 import { PageContainer, FooterToolbar } from '@ant-design/pro-layout';
-import ProTable from '@ant-design/pro-table';
+import ProTable from '@/components/Table/index';
 import { ModalForm, ProFormText, ProFormTextArea } from '@ant-design/pro-form';
 import ProDescriptions from '@ant-design/pro-descriptions';
 import UpdateForm from './components/UpdateForm';
 import { list, add, update, remove } from '@/services/ant-design-pro/rule';
 import { pagination, columnEmptyText } from '@/config/constant';
-import SearchForm from '@/components/Form/SearchForm';
+
 import EditBtn from '@/components/Form/components/Button/EditBtn';
 import DeleteBtn from '@/components/Form/components/Button/DeleteBtn';
 import DeleteModal from '@/components/Form/components/Modal/DeleteModal';
@@ -164,6 +164,7 @@ const TableList = () => {
       align: 'center',
       search: true,
       type: 'input',
+      ellipsis: true,
       tip: 'The rule name is the unique key',
       render: (dom, entity) => {
         return (
@@ -344,29 +345,6 @@ const TableList = () => {
   ];
   return (
     <div>
-      <SearchForm
-        searchFormRef={searchFormRef}
-        searchColumns={searchColumns}
-        span={3}
-        toolBarRender={[
-          <Button style={{ marginRight: 16 }} htmlType="reset" key="reset">
-            重置
-          </Button>,
-          <Button
-            onClick={() => {
-              formRef?.current.submit();
-            }}
-            key="search"
-            type="primary"
-          >
-            查询
-          </Button>,
-        ]}
-        labelStyle={{
-          width: 100,
-          letterSpacing: 3,
-        }}
-      />
       <ProTable
         actionRef={actionRef}
         formRef={formRef}

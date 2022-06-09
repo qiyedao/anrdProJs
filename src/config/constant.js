@@ -3,7 +3,7 @@ export const pagination = {
   size: 'default',
   position: ['bottomCenter'],
   showSizeChanger: false,
-  pageSize: 50,
+  pageSize: 20,
   showTotal: () => '',
 };
 export const columnEmptyText = '--';
