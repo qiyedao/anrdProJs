@@ -160,6 +160,9 @@ const TableList = () => {
       align: 'center',
       search: true,
       type: 'input',
+      fieldProps: {
+        required: true,
+      },
       ellipsis: true,
       tip: 'The rule name is the unique key',
       render: (dom, entity) => {

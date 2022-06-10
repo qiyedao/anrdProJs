@@ -120,7 +120,7 @@ const TableList = () => {
    * current selectRows
    */
   const [selectedRowsState, setSelectedRows] = useState([]);
-
+  const [confirmLoading, setConfirmLoading] = useState(false);
   const handleRequest = async (params) => {
     let searchParams = { ...params };
     try {
@@ -156,6 +156,8 @@ const TableList = () => {
         />
       ),
       dataIndex: 'name',
+      ellipsis: true,
+      width: 60,
       align: 'center',
       search: true,
       tip: 'The rule name is the unique key',
@@ -375,8 +377,14 @@ const TableList = () => {
       />
       <UpdateModal
         onSubmit={() => {
-          handleUpdateModalVisible(false);
+          setConfirmLoading(true);
+
+          message.loading('loading', 3, () => {
+            setConfirmLoading(false);
+            handleUpdateModalVisible(false);
+          });
         }}
+        confirmLoading={confirmLoading}
         onCancel={() => {
           handleUpdateModalVisible(false);
         }}

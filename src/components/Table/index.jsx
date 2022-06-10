@@ -24,7 +24,7 @@ const ProTable = ({
   const [total, setTotal] = useState(0);
   const searchFormRef = useRef();
   useEffect(() => {
-    handdleSearchColumns();
+    handleSearchColumns();
     handleRequest({ current: 1 });
     handleActionRef();
     formRef.current = searchFormRef.current;
@@ -95,7 +95,7 @@ const ProTable = ({
     }
   };
   //处理搜索列表
-  const handdleSearchColumns = () => {
+  const handleSearchColumns = () => {
     const columnsForSearch = columns
       .filter((item) => item.search !== false && item.type)
       .map((item) => {
