@@ -56,7 +56,7 @@ export const renderFormComponent = (item) => {
     type,
     name,
     labelName,
-    fieldProps,
+    fieldProps = {},
     labelStyle,
     disabled,
     readonly,
