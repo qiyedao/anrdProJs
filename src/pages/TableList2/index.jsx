@@ -6,7 +6,7 @@ import DeleteBtn from '@/components/CustomForm/components/ButtonList/DeleteBtn';
 import EditBtn from '@/components/CustomForm/components/ButtonList/EditBtn';
 import DeleteModal from '@/components/CustomForm/components/Modal/DeleteModal';
 import UpdateModal from '@/components/CustomForm/components/Modal/UpdateModal';
-import ProTable from '@/components/Table/index';
+import ProTable from '@/components/CustomTable/index';
 import { pagination } from '@/config/constant';
 
 import { add, list, remove, update } from '@/services/ant-design-pro/api';

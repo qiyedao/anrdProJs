@@ -41,6 +41,14 @@ const renderLabel = (fieldProps, labelStyle, labelName) => (
 /**
  *
  * @param {*} item
+ * name:字段名
+ * type:组件类型
+ * labelName:标签名
+ * labelStyle:标签css
+ * disabled & readonly 禁用选择只读样式,
+ * inline-- inlineStyle-upload 专用
+ * fieldProps:表单属性
+ * style 表单css
  * @returns
  */
 export const renderFormComponent = (item) => {
@@ -52,18 +60,33 @@ export const renderFormComponent = (item) => {
     labelStyle,
     disabled,
     readonly,
-    suffix,
     inline = false,
     style = {},
     inlineStyle = {},
+    Component,
   } = item;
   let styles = { width: fieldProps?.width || '100%' };
-
+  fieldProps.rules = fieldProps?.rules || [
+    { required: !!fieldProps?.required, message: '此为必填' },
+  ];
   let readonlySyle = readonly
     ? { backgroundColor: '#fff', cursor: 'default', color: '#0E2949' }
     : {};
   styles = Object.assign(styles, readonlySyle, style);
   switch (type) {
+    case 'custom':
+      return (
+        <WrappedFormItem
+          name={name + 'custom'}
+          label={renderLabel(fieldProps, labelStyle, labelName)}
+        >
+          {getFieldDecorator(`${name}`, {
+            initialValue: initialValues[name],
+
+            rules: fieldProps?.rules || [],
+          })(<Component style={{ ...styles }} disabled={!!disabled} {...fieldProps} />)}
+        </WrappedFormItem>
+      );
     case 'Input':
       return (
         <WrappedFormItem
@@ -71,7 +94,7 @@ export const renderFormComponent = (item) => {
           rules={fieldProps?.rules || []}
           label={renderLabel(fieldProps, labelStyle, labelName)}
         >
-          <Input suffix={suffix} style={{ ...styles }} disabled={!!disabled} {...fieldProps} />
+          <Input style={{ ...styles }} disabled={!!disabled} {...fieldProps} />
         </WrappedFormItem>
       );
     case 'InputSelect':
