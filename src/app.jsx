@@ -1,19 +1,16 @@
-import React from 'react';
-import { SettingDrawer } from '@ant-design/pro-layout';
-import { PageLoading } from '@ant-design/pro-layout';
-import { history, Link } from 'umi';
-import RightContent from '@/components/RightContent';
 import Footer from '@/components/Footer';
+import RightContent from '@/components/RightContent';
+import { PageLoading } from '@ant-design/pro-layout';
+import React from 'react';
+import { history, Link } from 'umi';
+import defaultSettings from '../config/defaultSettings';
 import Content from './components/Content';
 import { currentUser as queryCurrentUser } from './services/ant-design-pro/api';
-import { BookOutlined, LinkOutlined } from '@ant-design/icons';
-import { notification } from 'antd';
-import defaultSettings from '../config/defaultSettings';
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
 /** 获取用户信息比较慢的时候会展示一个 loading */
-import MenuIcon from './components/MenuIcon';
 import { Inspector } from 'react-dev-inspector';
+import MenuIcon from './components/MenuIcon';
 const InspectorWrapper = isDev ? Inspector : React.Fragment;
 
 const menuIcon = {
@@ -124,16 +121,7 @@ export const layout = ({ initialState, setInitialState }) => {
       // if (initialState?.loading) return <PageLoading />;
       return (
         <Content>
-          <InspectorWrapper
-            keys={
-              window.navigator.userAgent.includes('Win')
-                ? ['control', 'shift', 'c']
-                : ['command', 'shift', 'c']
-            }
-            disableLaunchEditor={false}
-            onHoverElement={(params) => {}}
-            onClickElement={(params) => {}}
-          >
+          <InspectorWrapper keys={['shift', 'c']}>
             {children}
             {/* {!props.location?.pathname?.includes('/login') && (
             <SettingDrawer

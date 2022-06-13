@@ -16,7 +16,8 @@ export default ({
   onCancel,
   rowStyle,
   colStyle,
-  footerStyle,
+  formProps = {},
+  modalProps = {},
 }) => {
   const formRef = useRef();
   const [confirmLoading, setConfirmLoading] = useState(false);
@@ -41,10 +42,12 @@ export default ({
           .catch((err) => {});
       }}
       onCancel={() => {
+        formRef?.current.resetFields();
         onCancel();
       }}
+      {...modalProps}
     >
-      <Form ref={formRef}>
+      <Form ref={formRef} {...formProps}>
         <div>
           {formArr(columns, span || 1).map((item1, index1) => {
             return (
@@ -68,7 +71,7 @@ export default ({
           })}
 
           {toolBarRender ? (
-            <div style={footerStyle}>
+            <div style={modalProps?.footerStyle}>
               {toolBarRender ? toolBarRender.map((item) => item) : null}
             </div>
           ) : null}

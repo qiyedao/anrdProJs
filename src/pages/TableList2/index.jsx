@@ -412,6 +412,7 @@ const TableList = () => {
           return status;
         }}
         onCancel={() => {
+          setCurrentRow(null);
           handleUpdateModalVisible(false);
         }}
         title="规则"
