@@ -5,10 +5,10 @@ import { FormattedMessage, useIntl } from 'umi';
 import DeleteBtn from '@/components/CustomForm/components/ButtonList/DeleteBtn';
 import EditBtn from '@/components/CustomForm/components/ButtonList/EditBtn';
 import DeleteModal from '@/components/CustomForm/components/Modal/DeleteModal';
-import UpdateModal from '@/components/CustomForm/components/Modal/UpdateModal';
 import ProTable from '@/components/CustomTable/index';
 import { pagination } from '@/config/constant';
 
+import UpdateForm from '@/components/CustomForm/UpdateForm';
 import { add, list, remove, update } from '@/services/ant-design-pro/api';
 
 /**
@@ -31,6 +31,7 @@ const handleAdd = async (fields) => {
     return false;
   }
 };
+
 /**
  * @en-US Update node
  * @zh-CN 更新节点
@@ -307,41 +308,51 @@ const TableList = () => {
       ],
     },
   ];
-  const searchColumns = [
+  const formColmns = [
     {
+      type: 'Input',
       name: 'name',
       labelName: '规则名称',
-      type: 'input',
     },
     {
-      name: 'number',
-      labelName: '次数',
-      type: 'number',
-    },
-    {
+      type: 'Select',
       name: 'status',
       labelName: '状态',
-      type: 'select',
+      labelStyle: {
+        width: 56,
+      },
 
       fieldProps: {
-        width: '200px',
+        required: true,
         options: [
-          { label: '1111', value: 1111 },
-          { label: '000', value: '000' },
+          { label: 'success', value: 0 },
+          { label: 'fail', value: 2 },
         ],
       },
     },
     {
-      name: 'time',
-      labelName: '上次调度时间',
-      type: 'DatePicker',
+      type: 'Input',
+      name: 'nam1e',
+      labelName: '规则名称',
     },
     {
-      name: 'RangePicker',
-      labelName: '上次调度时间22',
-      type: 'RangePicker',
+      type: 'Select',
+      name: 'sta1tus',
+      labelName: '状态',
+      labelStyle: {
+        width: 56,
+      },
+
+      fieldProps: {
+        required: true,
+        options: [
+          { label: 'success', value: 0 },
+          { label: 'fail', value: 2 },
+        ],
+      },
     },
   ];
+
   return (
     <div>
       <ProTable
@@ -365,10 +376,20 @@ const TableList = () => {
             onClick={() => {
               actionRef?.current.submit();
             }}
+            style={{ marginRight: 16 }}
             key="search"
             type="primary"
           >
             查询1
+          </Button>,
+          <Button
+            onClick={() => {
+              handleUpdateModalVisible(true);
+            }}
+            key="add"
+            type="primary"
+          >
+            新增1
           </Button>,
         ]}
         request={handleRequest}
@@ -384,13 +405,20 @@ const TableList = () => {
           ...pagination,
         }}
       />
-      <UpdateModal
-        onSubmit={() => {
-          handleUpdateModalVisible(false);
+      <UpdateForm
+        onSubmit={async () => {
+          const status = await handleAdd();
+          handleUpdateModalVisible(!status);
+          return status;
         }}
         onCancel={() => {
           handleUpdateModalVisible(false);
         }}
+        title="规则"
+        valuesKey={'key'}
+        values={currentRow}
+        span={2}
+        columns={formColmns}
         footerStyle={{
           paddingBottom: 20,
         }}

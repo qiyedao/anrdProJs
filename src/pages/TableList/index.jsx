@@ -2,8 +2,7 @@ import DeleteBtn from '@/components/CustomForm/components/ButtonList/DeleteBtn';
 import EditBtn from '@/components/CustomForm/components/ButtonList/EditBtn';
 import DeleteModal from '@/components/CustomForm/components/Modal/DeleteModal';
 import UpdateModal from '@/components/CustomForm/components/Modal/UpdateModal';
-import SearchForm from '@/components/CustomForm/SearchForm';
-import ShowOrEditUpload from '@/components/showOrEditUpload';
+import SearchForm from '@/components/CustomForm/SearchForm/index';
 import { columnEmptyText, pagination } from '@/config/constant';
 import { add, list, remove, update } from '@/services/ant-design-pro/api';
 import ProTable from '@ant-design/pro-table';
@@ -160,6 +159,7 @@ const TableList = () => {
       width: 60,
       align: 'center',
       search: true,
+      type: 'Input',
       tip: 'The rule name is the unique key',
       render: (dom, entity) => {
         return (
@@ -204,7 +204,60 @@ const TableList = () => {
       dataIndex: 'status',
       hideInForm: true,
       align: 'center',
+      type: 'Select',
 
+      labelStyle: {
+        width: 56,
+      },
+      fieldProps: {
+        width: 200,
+        options: [
+          {
+            label: 'success',
+            value: 'value',
+          },
+          {
+            label: 'success1',
+            value: 'value',
+          },
+          {
+            label: 'success11',
+            value: 'value',
+          },
+          {
+            label: 'success111',
+            value: 'value',
+          },
+          {
+            label: 'success1111',
+            value: 'value',
+          },
+          {
+            label: 'success11111',
+            value: 'value',
+          },
+          {
+            label: 'success1111111',
+            value: 'value',
+          },
+          {
+            label: 'success1111111111',
+            value: 'value',
+          },
+          {
+            label: 'success1111111',
+            value: 'value',
+          },
+          {
+            label: 'succes1s',
+            value: 'value',
+          },
+          {
+            label: 'suc1cess',
+            value: 'value',
+          },
+        ],
+      },
       valueEnum: {
         0: {
           text: (
@@ -295,46 +348,22 @@ const TableList = () => {
       ],
     },
   ];
-  const searchColumns = [
-    {
-      name: 'name',
-      labelName: '规则名称',
-      type: 'Input',
-    },
-    {
-      name: 'number',
-      labelName: '次数',
-      type: 'number',
-    },
-    {
-      name: 'status',
-      labelName: '状态',
-      type: 'Select',
-
-      fieldProps: {
-        width: '178px',
-        options: [
-          { label: '1111', value: 1111 },
-          { label: '000', value: '000' },
-        ],
-      },
-    },
-    {
-      name: 'time',
-      labelName: '上次调度时间',
-      type: 'DatePicker',
-    },
-    {
-      name: 'RangePicker',
-      labelName: '上次调度时间22',
-      type: 'RangePicker',
-    },
-  ];
+  const handleSearchColumns = () => {
+    return columns
+      .filter((item) => item.search !== false && item.type)
+      .map((item) => {
+        return {
+          ...item,
+          name: item.name || item.dataIndex,
+          labelName: item.labelName || item.title,
+        };
+      });
+  };
   return (
     <div>
       <SearchForm
         searchFormRef={searchFormRef}
-        searchColumns={searchColumns}
+        searchColumns={handleSearchColumns()}
         span={3}
         toolBarRender={[
           <Button
@@ -359,7 +388,7 @@ const TableList = () => {
       <ProTable
         actionRef={actionRef}
         formRef={formRef}
-        rowKey="id"
+        rowKey="key"
         search={{ optionRender: () => null }}
         toolBarRender={false}
         request={handleRequest}
@@ -401,10 +430,6 @@ const TableList = () => {
           handleDeleteModalVisible(false);
         }}
         visible={deleteModalVisible}
-      />
-      <ShowOrEditUpload
-        // url={'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'}
-        isButton={true}
       />
 
       {/* <ModalForm

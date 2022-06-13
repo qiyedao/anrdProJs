@@ -1,4 +1,4 @@
-import SearchForm from '@/components/CustomForm/SearchForm';
+import SearchForm from '@/components/CustomForm/SearchForm/index';
 import { Button, Pagination, Table } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 import './index.less';

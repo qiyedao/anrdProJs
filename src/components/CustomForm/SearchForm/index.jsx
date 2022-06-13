@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
-import { Form, Input, Select, Button, DatePicker, Row, Col } from 'antd';
-const { Option } = Select;
+import { formArr, renderFormComponent } from '@/components/CustomForm/common/index';
+import { Form, Select } from 'antd';
+import CustomWrappedFormItem from '../components/CustomWrappedFormItem';
 import styles from './index.less';
-import CustomWrappedFormItem from './components/CustomWrappedFormItem';
-import { renderFormComponent } from '@/components/CustomForm/common/index';
-import { formArr } from '@/components/CustomForm/common/index';
+const { Option } = Select;
 const Demo = ({ span, searchColumns, searchFormRef, toolBarRender }) => {
   const onFinish = (values) => {
     console.log('Received values from form: ', values);
