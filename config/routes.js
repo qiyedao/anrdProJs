@@ -78,7 +78,7 @@ export default [
   {
     name: 'list2',
     icon: 'table',
-    path: '/list2',
+    path: '/console/home/home',
     component: './TableList2',
     customLevel: 1,
   },

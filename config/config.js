@@ -1,10 +1,10 @@
 // https://umijs.org/config/
 import { defineConfig } from 'umi';
 import defaultSettings from './defaultSettings';
+import openAPI from './openAPI';
 import proxy from './proxy';
 import routes from './routes';
 import theme from './theme';
-import openAPI from './openAPI';
 const { REACT_APP_ENV } = process.env;
 export default defineConfig({
   hash: true,
@@ -57,11 +57,11 @@ export default defineConfig({
   // chainWebpack(config, webpack) {
   //   console.log(JSON.stringify(config));
   // },
-  // terserOptions: {
-  //   compress: {
-  //     drop_console: true,
-  //   },
-  // },
+  terserOptions: {
+    compress: {
+      drop_console: true,
+    },
+  },
   // chunks: ['umi', 'vendors'],
   // chainWebpack: (config) => {
   //   config.optimization.splitChunks({
