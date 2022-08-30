@@ -68,6 +68,7 @@ const Content = ({ children }) => {
     <PageHeaderWrapper
       header={{
         title: '',
+        style: { position: 'fixed', top: 0, right: 0, width: 'calc(100% - 208px)', zIndex: 9999 },
       }}
       style={{ minWidth: 800 }}
       breadcrumbRender={breadcrumbRender}

@@ -1,9 +1,8 @@
 import classNames from 'classnames';
-import React from 'react';
 import './index.less';
 const Content = ({ children }) => {
   let noPaddingPath = ['/welcome'];
-  let noBgColor = ['/material/info/detail', '/supply/admin/detail', '/supply/market/detail'];
+  let noBgColor = ['/welcome'];
   const isNOPadding = noPaddingPath.includes(location.pathname);
   const isNOBg = noBgColor.includes(location.pathname);
 

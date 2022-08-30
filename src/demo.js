@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import { DeleteOutlined, UploadOutlined } from '@ant-design/icons';
+import { Button, message, Upload } from 'antd';
 import 'antd/dist/antd.css';
+import { useEffect, useState } from 'react';
 import './index.css';
-import { Upload, Button, message } from 'antd';
-import { UploadOutlined, DeleteOutlined } from '@ant-design/icons';
 
 const App = () => {
   const [fileList, setFileList] = useState([]);
@@ -16,7 +16,7 @@ const App = () => {
         name: 'xxx.png',
         status: 'done',
         response: 'Server Error 500',
-        // custom error message to show
+        //   custom error message to show
         url: 'http://www.baidu.com/xxx.png',
       },
       {
