@@ -2,7 +2,7 @@ import { commonFormUpload } from '@/utils/upload';
 import { PlusOutlined } from '@ant-design/icons';
 import { Col, message, Modal, Row, Upload } from 'antd';
 import classNames from 'classnames';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import ProxyAPi from '../../../config/proxy';
 import './index.less';
 
@@ -18,6 +18,7 @@ export default (props) => {
   const [text, setText] = useState('图片'); //
   const [editText, setEditText] = useState('编辑文件'); //
   useEffect(() => {
+    console.log('props', props);
     const { url } = props;
     if (url) {
       let obj = {};
