@@ -4,7 +4,6 @@ const Settings: LayoutSettings & {
   pwa?: boolean;
   logo?: string;
 } = {
-  navTheme: 'light',
   // 拂晓蓝
   primaryColor: '#1890ff',
   layout: 'mix',
@@ -16,6 +15,11 @@ const Settings: LayoutSettings & {
   pwa: false,
   logo: 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
   iconfontUrl: '',
+  navTheme: 'dark',
+
+  headerHeight: 48,
+  splitMenus: false,
+  headerRender: false, //取消顶部
 };
 
 export default Settings;
