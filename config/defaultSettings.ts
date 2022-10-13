@@ -11,7 +11,7 @@ const Settings: LayoutSettings & {
   fixedHeader: false,
   fixSiderbar: true,
   colorWeak: false,
-  title: 'Ant Design Pro',
+  title: 'yiyi',
   pwa: false,
   logo: 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
   iconfontUrl: '',
@@ -19,7 +19,7 @@ const Settings: LayoutSettings & {
 
   headerHeight: 48,
   splitMenus: false,
-  headerRender: false, //取消顶部
+  // headerRender: false, //取消顶部
 };
 
 export default Settings;
