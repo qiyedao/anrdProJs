@@ -9,7 +9,6 @@ import routes from './routes';
 const { REACT_APP_ENV } = process.env;
 
 export default defineConfig({
-  plugins: ['./plugins/favicon/customFavicon.ts', './plugins/tailwind/index.ts'],
   tailwindcss: {
     // tailwindCssFilePath: '@/tailwind.css',//指定后需手动创建文件
     tailwindConfigFilePath: 'tailwind.config.js', // 默认取值 tailwindConfigFilePath || join(process.env.APP_ROOT || api.cwd, 'tailwind.config.js'),,
