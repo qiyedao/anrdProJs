@@ -9,7 +9,7 @@ import ProTable from '@/components/CustomTable/index';
 import { pagination } from '@/config/constant';
 
 import UpdateForm from '@/components/CustomForm/UpdateForm';
-import { add, list, remove, update } from '@/services/ant-design-pro/api';
+import { addRule, rule, removeRule, updateRule } from '@/services/ant-design-pro/api';
 
 /**
  * @en-US Add node
@@ -21,7 +21,7 @@ const handleAdd = async (fields) => {
   const hide = message.loading('正在添加');
 
   try {
-    await add({ ...fields });
+    await addRule({ ...fields });
     hide();
     message.success('Added successfully');
     return true;
@@ -43,7 +43,7 @@ const handleUpdate = async (fields) => {
   const hide = message.loading('Configuring');
 
   try {
-    await update({
+    await updateRule({
       name: fields.name,
       desc: fields.desc,
       key: fields.key,
@@ -69,7 +69,7 @@ const handleRemove = async (selectedRows) => {
   if (!selectedRows) return true;
 
   try {
-    await remove({
+    await removeRule({
       key: selectedRows.map((row) => row.key),
     });
     hide();
@@ -132,7 +132,7 @@ const TableList = () => {
         searchParams = { ...searchParams, ...values };
       }
       console.log('handleRequestsearchParams', searchParams);
-      const data = await list(searchParams);
+      const data = await rule(searchParams);
       console.log('data', data);
       return {
         data: data.data || [],

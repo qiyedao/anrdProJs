@@ -7,5 +7,3 @@ dist
 .umi
 mock
 /plugins
-styles/braft-editor.less
-styles/braft-output.less
