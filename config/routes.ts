@@ -14,10 +14,18 @@
     ],
   },
   {
-    path: '/welcome',
-    name: 'welcome',
-    icon: 'smile',
-    component: './Welcome',
+    path: '/home',
+    layout: false,
+    routes: [
+      {
+        path: '/home/welcome',
+        name: 'welcome',
+        component: './Welcome',
+      },
+      {
+        component: './404',
+      },
+    ],
   },
   {
     path: '/admin',
@@ -44,7 +52,7 @@
   },
   {
     path: '/',
-    redirect: '/welcome',
+    redirect: '/home/welcome',
   },
   {
     component: './404',

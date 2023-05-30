@@ -2,9 +2,9 @@
 
 import { PageContainer } from '@ant-design/pro-components';
 import { css } from '@emotion/react';
-import { Alert, Card, Typography } from 'antd';
+import { Alert, Button, Card, Typography } from 'antd';
 import React from 'react';
-import { FormattedMessage, useIntl } from 'umi';
+import { FormattedMessage, Link, useIntl } from 'umi';
 import BraftEditor from 'braft-editor';
 
 const AlertCss = css`
@@ -17,7 +17,8 @@ const Welcome: React.FC = () => {
   const intl = useIntl();
 
   return (
-    <PageContainer>
+    <PageContainer pageHeaderRender={() => null}>
+      <Link to={'/admin/sub-page'}>console</Link>
       <Card>
         <div css={AlertCss}>
           <Alert
