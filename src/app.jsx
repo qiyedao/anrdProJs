@@ -1,6 +1,6 @@
 import Footer from '@/components/Footer';
 import RightContent from '@/components/RightContent';
-import { PageLoading } from '@ant-design/pro-layout';
+import { PageLoading, SettingDrawer } from '@ant-design/pro-layout';
 import React from 'react';
 import { history, Link } from 'umi';
 import defaultSettings from '../config/defaultSettings';
@@ -123,7 +123,6 @@ export const layout = ({ initialState, setInitialState }) => {
         <Content>
           <InspectorWrapper keys={['shift', 'c']}>
             {children}
-            {/* {!props.location?.pathname?.includes('/login') && (
             <SettingDrawer
               disableUrlParams
               enableDarkTheme
@@ -132,7 +131,6 @@ export const layout = ({ initialState, setInitialState }) => {
                 setInitialState((preInitialState) => ({ ...preInitialState, settings }));
               }}
             />
-          )} */}
           </InspectorWrapper>
         </Content>
       );
