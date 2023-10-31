@@ -7,18 +7,18 @@ const BASE_URL = BASE_URL_MAP[APP_ENV];
 
 const PREFIX_MAP = {
   dev: {
-    GLOBAL: 'api/v1/',
+    GLOBAL: '',
     STATIC: '',
-    USER: 'api/v1/',
-    SYSTEM_USER: 'api/v1/system/user/',
-    STANDARD_SYSTEM: 'api/v1/sys/',
+    USER: '',
+    SYSTEM_USER: '',
+    STANDARD_SYSTEM: '',
   },
   prod: {
-    GLOBAL: 'api/v1/',
+    GLOBAL: '',
     STATIC: '',
-    USER: 'api/v1/',
-    SYSTEM_USER: 'api/v1/system/user/',
-    STANDARD_SYSTEM: 'api/v1/sys/',
+    USER: '',
+    SYSTEM_USER: '',
+    STANDARD_SYSTEM: '',
   },
 };
 
