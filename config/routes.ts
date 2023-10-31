@@ -38,4 +38,9 @@ export default [
     component: './Table',
     icon: 'HomeFilled',
   },
+  {
+    path: '/*',
+    component: '@/pages/404',
+    layout: false,
+  },
 ];
