@@ -24,4 +24,4 @@ const Token: ProLayoutProps['token'] = {
     colorTextMenu: colorTextPrimary,
   },
 };
-export default Token;
+export { Token };

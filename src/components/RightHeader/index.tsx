@@ -11,10 +11,8 @@ const RightHeader = () => {
         boxShadow: ' 0 1px 4px rgba(0,21,41,8%)',
       }}
     >
-      <div
-        className="absolute flex flex-1 justify-end w-full"
-        style={{ display: 'flex', justifyContent: 'flex-end' }}
-      >
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div></div>
         <div style={{ width: 100 }}>
           <AvatarDropdown>
             <div style={{ display: 'flex' }}>

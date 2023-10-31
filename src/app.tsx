@@ -3,7 +3,9 @@ import Footer from '@/components/Footer';
 import type { RunTimeLayoutConfig } from '@umijs/max';
 import { Avatar, FloatButton } from 'antd';
 import RightHeader from './components/RightHeader';
-import token from './theme';
+import { Token } from './constants';
+
+export { default as request } from '@/utils/request';
 // 全局初始化数据配置，用于 Layout 用户信息和权限初始化
 // 更多信息见文档：https://umijs.org/docs/api/runtime-config#getinitialstate
 export async function getInitialState(): Promise<{
@@ -27,7 +29,7 @@ export const layout: RunTimeLayoutConfig = ({}) => {
     layout: 'side',
     fixedHeader: false,
 
-    colorPrimary: token?.colorPrimary,
+    colorPrimary: Token?.colorPrimary,
 
     breadcrumbRender: (routes) => routes?.slice(1),
     rightContentRender: () => <></>,
@@ -40,6 +42,6 @@ export const layout: RunTimeLayoutConfig = ({}) => {
       </div>
     ),
     footerRender: () => <Footer />,
-    token: token,
+    token: Token,
   };
 };
